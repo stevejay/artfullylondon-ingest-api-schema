@@ -4,7 +4,7 @@ from setuptools import setup
 setup(
     name='artfullylondon_ingestschema',
 
-    version='0.2.1',
+    version='0.2.2',
     python_requires='>=3.7',
 
     description='',
