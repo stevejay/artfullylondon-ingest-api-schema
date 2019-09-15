@@ -14,9 +14,6 @@ jobs:
           name: Copy license file
           command: cp ./LICENSE ./python/LICENSE
       - run:
-          name: temp
-          command: cd ./python && ls
-      - run:
           name: Install python dependencies
           command: pip install --user setuptools twine wheel
       - run:
