@@ -21,7 +21,7 @@ jobs:
           command: cd ./python && python3 setup.py sdist bdist_wheel
       - run:
           name: Upload package to pipy
-          command: cd ./python && python3 -m twine upload dist/*
+          command: cd ./python && python3 -m twine upload --skip-existing dist/*
 
 workflows:
   version: 2
