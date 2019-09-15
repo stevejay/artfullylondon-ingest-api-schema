@@ -8,6 +8,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: temp2
+          command: ls
+      - run:
           name: Copy schema dir content to python dir
           command: cp ../schema/*.json ./artfullylondon/ingestschema/
       - run:
