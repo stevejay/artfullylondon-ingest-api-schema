@@ -14,7 +14,7 @@ jobs:
           command: cp ./LICENSE ./python/LICENSE
       - run:
           name: Change directory to python subdirectory
-          command: cd ./python
+          command: cd ~/project/python
       - run:
           name: Install python dependencies
           command: pip install --user setuptools twine wheel
