@@ -1,0 +1,35 @@
+version: 2.1
+
+jobs:
+  build_python_package:
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - checkout
+      - run:
+          name: Copy schema dir content to python dir
+          command: cp ./schema/*.json ./python/artfullylondon/ingestschema/
+      - run:
+          name: Copy license file
+          command: cp ./LICENSE ./python/LICENSE
+      - run:
+          name: Change directory to python subdirectory
+          command: cd ./python
+      - run:
+          name: Install python dependencies
+          command: pip install setuptools twine wheel
+      - run:
+          name: Build package
+          command: python3 setup.py sdist bdist_wheel
+      - run:
+          name: Upload package to pipy
+          command: python3 -m twine upload dist/*
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build_python_package:
+          filters:
+            branches:
+              only: master
