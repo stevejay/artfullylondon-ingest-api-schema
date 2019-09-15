@@ -4,17 +4,15 @@ jobs:
   build_python_package:
     docker:
       - image: circleci/python:3.7
+    working_directory: ~/project/python
     steps:
       - checkout
       - run:
           name: Copy schema dir content to python dir
-          command: cp ./schema/*.json ./python/artfullylondon/ingestschema/
+          command: cp ../schema/*.json ./artfullylondon/ingestschema/
       - run:
           name: Copy license file
-          command: cp ./LICENSE ./python/LICENSE
-      - run:
-          name: Change directory to python subdirectory
-          command: cd ~/project/python
+          command: cp ../LICENSE ./LICENSE
       - run:
           name: temp
           command: ls
