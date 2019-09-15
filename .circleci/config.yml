@@ -17,7 +17,7 @@ jobs:
           command: cd ./python
       - run:
           name: Install python dependencies
-          command: pip install setuptools twine wheel
+          command: pip install --user setuptools twine wheel
       - run:
           name: Build package
           command: python3 setup.py sdist bdist_wheel
