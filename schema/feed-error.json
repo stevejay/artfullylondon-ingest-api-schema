@@ -16,12 +16,14 @@
         "venueId": {
             "title": "Venue ID",
             "description": "ID of the venue",
-            "type": "string"
+            "type": "string",
+            "minLength": 1
         },
         "venueEntityId": {
             "title": "Venue Entity ID",
             "description": "Venue-unique ID of the entity",
-            "type": "string"
+            "type": "string",
+            "minLength": 1
         },
         "url": {
             "title": "URL",
@@ -32,12 +34,14 @@
         "error": {
             "title": "Error",
             "description": "The error message",
-            "type": "string"
+            "type": "string",
+            "minLength": 1
         },
         "stacktrace": {
             "title": "Stacktrace",
             "description": "The error stacktrace",
-            "type": "string"
+            "type": "string",
+            "minLength": 1
         }
     },
     "required": [
