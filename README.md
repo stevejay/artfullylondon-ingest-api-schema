@@ -19,4 +19,7 @@ python3 setup.py sdist bdist_wheel
 python3 -m twine upload dist/*
 ```
 
-test
+// maxAge >= minAge
+// maxCost >= minCost
+// timeTo >= timeFrom
+// dateTo >= dateFrom
