@@ -129,17 +129,20 @@
                         "type": {
                             "title": "Cost Type",
                             "description": "Cost type of the event",
-                            "type": "string",
-                            "enum": [
-                                "Free",
-                                "Unknown"
-                            ]
+                            "const": "Free"
                         }
                     },
-                    "additionalProperties": false,
-                    "required": [
-                        "type"
-                    ]
+                    "additionalProperties": false
+                },
+                {
+                    "properties": {
+                        "type": {
+                            "title": "Cost Type",
+                            "description": "Cost type of the event",
+                            "const": "Unknown"
+                        }
+                    },
+                    "additionalProperties": false
                 },
                 {
                     "properties": {
@@ -167,11 +170,11 @@
                             ]
                         }
                     },
-                    "additionalProperties": false,
-                    "required": [
-                        "type"
-                    ]
+                    "additionalProperties": false
                 }
+            ],
+            "required": [
+                "type"
             ]
         },
         "bookingDetails": {
