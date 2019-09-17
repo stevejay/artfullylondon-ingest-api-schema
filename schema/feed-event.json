@@ -19,7 +19,7 @@
         "money": {
             "type": "number",
             "minimum": 0,
-            "maximum": 999
+            "maximum": 100000
         },
         "day": {
             "type": "string",
@@ -123,54 +123,48 @@
         },
         "costDetails": {
             "type": "object",
-            "anyOf": [
+            "properties": {
+                "type": {
+                    "title": "Cost Type",
+                    "type": "string",
+                    "enum": [
+                        "Free",
+                        "Paid",
+                        "Unknown"
+                    ]
+                }
+            },
+            "allOf": [
                 {
-                    "properties": {
-                        "type": {
-                            "title": "Cost Type",
-                            "description": "Cost type of the event",
-                            "const": "Free"
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "Paid"
+                            }
                         }
                     },
-                    "additionalProperties": false
-                },
-                {
-                    "properties": {
-                        "type": {
-                            "title": "Cost Type",
-                            "description": "Cost type of the event",
-                            "const": "Unknown"
+                    "then": {
+                        "properties": {
+                            "minCost": {
+                                "title": "Minimum Cost",
+                                "description": "Minimum cost for the event",
+                                "allOf": [
+                                    {
+                                        "$ref": "#/definitions/money"
+                                    }
+                                ]
+                            },
+                            "maxCost": {
+                                "title": "Maximum Cost",
+                                "description": "Maximum cost for the event",
+                                "allOf": [
+                                    {
+                                        "$ref": "#/definitions/money"
+                                    }
+                                ]
+                            }
                         }
-                    },
-                    "additionalProperties": false
-                },
-                {
-                    "properties": {
-                        "type": {
-                            "title": "Cost Type",
-                            "description": "Cost type of the event",
-                            "const": "Paid"
-                        },
-                        "minCost": {
-                            "title": "Minimum Cost",
-                            "description": "Minimum cost for the event",
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/money"
-                                }
-                            ]
-                        },
-                        "maxCost": {
-                            "title": "Maximum Cost",
-                            "description": "Maximum cost for the event",
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/money"
-                                }
-                            ]
-                        }
-                    },
-                    "additionalProperties": false
+                    }
                 }
             ],
             "required": [
@@ -179,46 +173,42 @@
         },
         "bookingDetails": {
             "type": "object",
-            "anyOf": [
-                {
-                    "properties": {
-                        "type": {
-                            "title": "Booking Type",
-                            "description": "Booking type of the event",
-                            "type": "string",
-                            "enum": [
-                                "NotRequired",
-                                "Unknown"
-                            ]
-                        }
-                    },
-                    "additionalProperties": false,
-                    "required": [
-                        "type"
-                    ]
-                },
-                {
-                    "properties": {
-                        "type": {
-                            "title": "Booking Type",
-                            "description": "Booking type of the event",
-                            "const": "Required"
-                        },
-                        "dateBookingOpens": {
-                            "title": "Date Booking Opens",
-                            "description": "Date that booking opens for the event",
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/date"
-                                }
-                            ]
-                        }
-                    },
-                    "additionalProperties": false,
-                    "required": [
-                        "type"
+            "properties": {
+                "type": {
+                    "title": "Booking Type",
+                    "type": "string",
+                    "enum": [
+                        "NotRequired",
+                        "Required",
+                        "Unknown"
                     ]
                 }
+            },
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "Required"
+                            }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "dateBookingOpens": {
+                                "title": "Date Booking Opens",
+                                "allOf": [
+                                    {
+                                        "$ref": "#/definitions/date"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            ],
+            "required": [
+                "type"
             ]
         },
         "performanceDetails": {
@@ -585,8 +575,7 @@
             "description": "URLs of the event images",
             "type": "array",
             "items": {
-                "title": "URL",
-                "description": "URL of the image",
+                "title": "Image URL",
                 "type": "string",
                 "format": "uri"
             },
@@ -602,14 +591,12 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "title": "ID",
-                        "description": "ID of the tag",
+                        "title": "Tag ID",
                         "type": "string",
                         "pattern": "^(audience|medium|style|geo)/.+"
                     },
                     "label": {
-                        "title": "Label",
-                        "description": "Label of the tag",
+                        "title": "Tag Label",
                         "type": "string",
                         "minLength": 1
                     }

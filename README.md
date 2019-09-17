@@ -1,6 +1,7 @@
 # artfullylondon-ingest-api-schema
 
 Shared schema for the Artfully London ingest system
+[![CircleCI](https://circleci.com/gh/stevejay/artfullylondon-ingest-api-schema/tree/master.svg?style=svg)](https://circleci.com/gh/stevejay/artfullylondon-ingest-api-schema/tree/master)
 
 ## Python
 

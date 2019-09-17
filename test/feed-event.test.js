@@ -66,14 +66,14 @@ const VALID_EXHIBITIONS = {
   free: buildExhibition({ costDetails: { type: "Free" } }),
   "paid with unknown cost": buildExhibition({ costDetails: { type: "Paid" } }),
   "paid with cost": buildExhibition({
-    costDetails: { type: "Paid", minCost: 10, maxCost: 100 }
+    costDetails: { type: "Paid", minCost: 1000, maxCost: 2000 }
   }),
   "unknown booking": buildExhibition({ bookingDetails: { type: "Unknown" } }),
   "booking not required": buildExhibition({
     bookingDetails: { type: "NotRequired" }
   }),
   "booking required with no opening date": buildExhibition({
-    bookingDetails: { type: "Required" }
+    bookingDetails: { type: "Required__________" }
   }),
   "booking required": buildExhibition({
     bookingDetails: { type: "Required", dateBookingOpens: "2018-01-18" }
@@ -280,7 +280,7 @@ const VALID_PERFORMANCES = {
   free: buildPerformance({ costDetails: { type: "Free" } }),
   "paid with unknown cost": buildPerformance({ costDetails: { type: "Paid" } }),
   "paid with cost": buildPerformance({
-    costDetails: { type: "Paid", minCost: 10, maxCost: 100 }
+    costDetails: { type: "Paid", minCost: 1000, maxCost: 2000 }
   }),
   "unknown booking": buildPerformance({ bookingDetails: { type: "Unknown" } }),
   "booking not required": buildPerformance({
