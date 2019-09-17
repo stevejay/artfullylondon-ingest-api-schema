@@ -73,7 +73,7 @@ const VALID_EXHIBITIONS = {
     bookingDetails: { type: "NotRequired" }
   }),
   "booking required with no opening date": buildExhibition({
-    bookingDetails: { type: "Required__________" }
+    bookingDetails: { type: "Required" }
   }),
   "booking required": buildExhibition({
     bookingDetails: { type: "Required", dateBookingOpens: "2018-01-18" }
