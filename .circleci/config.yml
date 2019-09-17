@@ -50,6 +50,8 @@ workflows:
     jobs:
       - test
       - build_python_package:
+          requires:
+            - test
           filters:
             branches:
               only: master
