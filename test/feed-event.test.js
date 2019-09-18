@@ -8,7 +8,28 @@ const createValidateFunc = () => {
   return ajv.compile(schema);
 };
 
-const buildExhibition = (customizations = {}) => ({
+const buildExhibitionDetails = (customizations = {}) => ({
+  dateFrom: "2018-01-10",
+  dateTo: "2018-02-20",
+  useVenueOpeningTimes: true,
+  hasTimedEntry: true,
+  ...customizations
+});
+
+const buildPerformanceDetails = (customizations = {}) => ({
+  isWorkshop: false,
+  ...customizations
+});
+
+const buildPerformance = (customizations = {}) => ({
+  date: "2019-01-18",
+  time: "19:30",
+  isSoldOut: false,
+  isCancelled: false,
+  ...customizations
+});
+
+const buildExhibitionEvent = (customizations = {}) => ({
   entity: "event",
   venueId: "venue-id",
   venueEntityId: "venue-entity-id",
@@ -25,17 +46,12 @@ const buildExhibition = (customizations = {}) => ({
   bookingDetails: {
     type: "Unknown"
   },
-  exhibitionDetails: {
-    dateFrom: "2018-01-10",
-    dateTo: "2018-02-20",
-    useVenueOpeningTimes: true,
-    hasTimedEntry: true
-  },
+  exhibitionDetails: buildExhibitionDetails(),
   rawContent: "the raw content",
   ...customizations
 });
 
-const buildPerformance = (customizations = {}) => ({
+const buildPerformanceEvent = (customizations = {}) => ({
   entity: "event",
   venueId: "venue-id",
   venueEntityId: "venue-entity-id",
@@ -52,9 +68,7 @@ const buildPerformance = (customizations = {}) => ({
   bookingDetails: {
     type: "Unknown"
   },
-  performanceDetails: {
-    isWorkshop: false
-  },
+  performanceDetails: buildPerformanceDetails(),
   rawContent: "the raw content",
   ...customizations
 });
@@ -64,34 +78,37 @@ it("should be a valid schema", () => {
 });
 
 const VALID_EXHIBITIONS = {
-  valid: buildExhibition(),
-  "with summary": buildExhibition({ summary: "The summary" }),
-  "unknown cost": buildExhibition({ costDetails: { type: "Unknown" } }),
-  free: buildExhibition({ costDetails: { type: "Free" } }),
-  "paid with unknown cost": buildExhibition({ costDetails: { type: "Paid" } }),
-  "paid with cost": buildExhibition({
+  valid: buildExhibitionEvent(),
+  "with summary": buildExhibitionEvent({ summary: "The summary" }),
+  "unknown cost": buildExhibitionEvent({ costDetails: { type: "Unknown" } }),
+  free: buildExhibitionEvent({ costDetails: { type: "Free" } }),
+  "paid with unknown cost": buildExhibitionEvent({
+    costDetails: { type: "Paid" }
+  }),
+  "paid with cost": buildExhibitionEvent({
     costDetails: { type: "Paid", minCost: 1000, maxCost: 2000 }
   }),
-  "unknown booking": buildExhibition({ bookingDetails: { type: "Unknown" } }),
-  "booking not required": buildExhibition({
+  "unknown booking": buildExhibitionEvent({
+    bookingDetails: { type: "Unknown" }
+  }),
+  "booking not required": buildExhibitionEvent({
     bookingDetails: { type: "NotRequired" }
   }),
-  "booking required with no opening date": buildExhibition({
+  "booking required with no opening date": buildExhibitionEvent({
     bookingDetails: { type: "Required" }
   }),
-  "booking required": buildExhibition({
+  "booking required": buildExhibitionEvent({
     bookingDetails: { type: "Required", dateBookingOpens: "2018-01-18" }
   }),
-  "with images": buildExhibition({ images: ["https://test.com/image.png"] }),
-  "with tags": buildExhibition({
+  "with images": buildExhibitionEvent({
+    images: ["https://test.com/image.png"]
+  }),
+  "with tags": buildExhibitionEvent({
     tags: [{ id: "audience/families", label: "families" }]
   }),
-  "has day opening rule": buildExhibition({
-    exhibitionDetails: {
-      dateFrom: "2018-01-10",
-      dateTo: "2018-02-20",
+  "has day opening rule": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({
       useVenueOpeningTimes: false,
-      hasTimedEntry: true,
       openingRules: [
         {
           type: "Day",
@@ -101,14 +118,11 @@ const VALID_EXHIBITIONS = {
         }
       ],
       closureRules: []
-    }
+    })
   }),
-  "has day closure opening rule with times": buildExhibition({
-    exhibitionDetails: {
-      dateFrom: "2018-01-10",
-      dateTo: "2018-02-20",
+  "has day closure opening rule with times": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({
       useVenueOpeningTimes: false,
-      hasTimedEntry: true,
       openingRules: [
         {
           type: "Day",
@@ -125,14 +139,11 @@ const VALID_EXHIBITIONS = {
           timeTo: "18:00"
         }
       ]
-    }
+    })
   }),
-  "has day closure opening rule without times": buildExhibition({
-    exhibitionDetails: {
-      dateFrom: "2018-01-10",
-      dateTo: "2018-02-20",
+  "has day closure opening rule without times": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({
       useVenueOpeningTimes: false,
-      hasTimedEntry: true,
       openingRules: [
         {
           type: "Day",
@@ -147,14 +158,11 @@ const VALID_EXHIBITIONS = {
           dateForType: "Tuesday"
         }
       ]
-    }
+    })
   }),
-  "has date opening rule": buildExhibition({
-    exhibitionDetails: {
-      dateFrom: "2018-01-10",
-      dateTo: "2018-02-20",
+  "has date opening rule": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({
       useVenueOpeningTimes: false,
-      hasTimedEntry: true,
       openingRules: [
         {
           type: "Date",
@@ -164,14 +172,11 @@ const VALID_EXHIBITIONS = {
         }
       ],
       closureRules: []
-    }
+    })
   }),
-  "has date closure rule with times": buildExhibition({
-    exhibitionDetails: {
-      dateFrom: "2018-01-10",
-      dateTo: "2018-02-20",
+  "has date closure rule with times": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({
       useVenueOpeningTimes: false,
-      hasTimedEntry: true,
       openingRules: [
         {
           type: "Date",
@@ -188,14 +193,11 @@ const VALID_EXHIBITIONS = {
           timeTo: "18:00"
         }
       ]
-    }
+    })
   }),
-  "has date closure rule without times": buildExhibition({
-    exhibitionDetails: {
-      dateFrom: "2018-01-10",
-      dateTo: "2018-02-20",
+  "has date closure rule without times": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({
       useVenueOpeningTimes: false,
-      hasTimedEntry: true,
       openingRules: [
         {
           type: "Date",
@@ -210,14 +212,11 @@ const VALID_EXHIBITIONS = {
           dateForType: "2019-10-23"
         }
       ]
-    }
+    })
   }),
-  "has preset opening rule": buildExhibition({
-    exhibitionDetails: {
-      dateFrom: "2018-01-10",
-      dateTo: "2018-02-20",
+  "has preset opening rule": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({
       useVenueOpeningTimes: false,
-      hasTimedEntry: true,
       openingRules: [
         {
           type: "Preset",
@@ -227,14 +226,11 @@ const VALID_EXHIBITIONS = {
         }
       ],
       closureRules: []
-    }
+    })
   }),
-  "has preset closure rule with times": buildExhibition({
-    exhibitionDetails: {
-      dateFrom: "2018-01-10",
-      dateTo: "2018-02-20",
+  "has preset closure rule with times": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({
       useVenueOpeningTimes: false,
-      hasTimedEntry: true,
       openingRules: [
         {
           type: "Day",
@@ -251,14 +247,11 @@ const VALID_EXHIBITIONS = {
           timeTo: "18:00"
         }
       ]
-    }
+    })
   }),
-  "has preset closure rule without times": buildExhibition({
-    exhibitionDetails: {
-      dateFrom: "2018-01-10",
-      dateTo: "2018-02-20",
+  "has preset closure rule without times": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({
       useVenueOpeningTimes: false,
-      hasTimedEntry: true,
       openingRules: [
         {
           type: "Day",
@@ -273,45 +266,43 @@ const VALID_EXHIBITIONS = {
           dateForType: "ChristmasEve"
         }
       ]
-    }
+    })
   })
 };
 
 const VALID_PERFORMANCES = {
-  valid: buildPerformance(),
-  "with summary": buildPerformance({ summary: "The summary" }),
-  "unknown cost": buildPerformance({ costDetails: { type: "Unknown" } }),
-  free: buildPerformance({ costDetails: { type: "Free" } }),
-  "paid with unknown cost": buildPerformance({ costDetails: { type: "Paid" } }),
-  "paid with cost": buildPerformance({
+  valid: buildPerformanceEvent(),
+  "with summary": buildPerformanceEvent({ summary: "The summary" }),
+  "unknown cost": buildPerformanceEvent({ costDetails: { type: "Unknown" } }),
+  free: buildPerformanceEvent({ costDetails: { type: "Free" } }),
+  "paid with unknown cost": buildPerformanceEvent({
+    costDetails: { type: "Paid" }
+  }),
+  "paid with cost": buildPerformanceEvent({
     costDetails: { type: "Paid", minCost: 1000, maxCost: 2000 }
   }),
-  "unknown booking": buildPerformance({ bookingDetails: { type: "Unknown" } }),
-  "booking not required": buildPerformance({
+  "unknown booking": buildPerformanceEvent({
+    bookingDetails: { type: "Unknown" }
+  }),
+  "booking not required": buildPerformanceEvent({
     bookingDetails: { type: "NotRequired" }
   }),
-  "booking required with no opening date": buildPerformance({
+  "booking required with no opening date": buildPerformanceEvent({
     bookingDetails: { type: "Required" }
   }),
-  "booking required": buildPerformance({
+  "booking required": buildPerformanceEvent({
     bookingDetails: { type: "Required", dateBookingOpens: "2018-01-18" }
   }),
-  "with images": buildPerformance({ images: ["https://test.com/image.png"] }),
-  "with tags": buildPerformance({
+  "with images": buildPerformanceEvent({
+    images: ["https://test.com/image.png"]
+  }),
+  "with tags": buildPerformanceEvent({
     tags: [{ id: "audience/families", label: "families" }]
   }),
-  "has performances": buildPerformance({
-    performanceDetails: {
-      isWorkshop: false,
-      performances: [
-        {
-          date: "2019-01-18",
-          time: "19:30",
-          isSoldOut: false,
-          isCancelled: false
-        }
-      ]
-    }
+  "has performances": buildPerformanceEvent({
+    performanceDetails: buildPerformanceDetails({
+      performances: [buildPerformance()]
+    })
   })
 };
 
@@ -338,142 +329,105 @@ describe("valid performances", () => {
 });
 
 const INVALID_EXHIBITIONS = {
-  "no entity value": buildExhibition({ entity: undefined }),
-  "empty entity value": buildExhibition({ entity: "" }),
-  "wrong entity value": buildExhibition({ entity: "venue" }),
-  "no venue ID": buildExhibition({ venueId: null }),
-  "empty venue ID": buildExhibition({ venueId: "" }),
-  "no venue entity ID": buildExhibition({ venueEntityId: undefined }),
-  "empty venue entity ID": buildExhibition({ venueEntityId: "" }),
-  "no raw content": buildExhibition({ rawContent: undefined }),
-  "empty raw content": buildExhibition({ rawContent: "" }),
-  "invalid event type": buildExhibition({ eventType: "Invalid" }),
-  "no url": buildExhibition({ url: undefined }),
-  "empty url value": buildExhibition({ url: "" }),
-  "wrong url value": buildExhibition({ url: "venue" }),
-  "no title": buildExhibition({ title: undefined }),
-  "empty title value": buildExhibition({ title: "" }),
-  "empty summary value": buildExhibition({ summary: "" }),
-  "no age details": buildExhibition({ ageDetails: undefined }),
-  "partial age details": buildExhibition({ ageDetails: { minAge: 10 } }),
-  "invalid age details": buildExhibition({
+  "no entity value": buildExhibitionEvent({ entity: undefined }),
+  "empty entity value": buildExhibitionEvent({ entity: "" }),
+  "wrong entity value": buildExhibitionEvent({ entity: "venue" }),
+  "no venue ID": buildExhibitionEvent({ venueId: null }),
+  "empty venue ID": buildExhibitionEvent({ venueId: "" }),
+  "no venue entity ID": buildExhibitionEvent({ venueEntityId: undefined }),
+  "empty venue entity ID": buildExhibitionEvent({ venueEntityId: "" }),
+  "no raw content": buildExhibitionEvent({ rawContent: undefined }),
+  "empty raw content": buildExhibitionEvent({ rawContent: "" }),
+  "invalid event type": buildExhibitionEvent({ eventType: "Invalid" }),
+  "no url": buildExhibitionEvent({ url: undefined }),
+  "empty url value": buildExhibitionEvent({ url: "" }),
+  "wrong url value": buildExhibitionEvent({ url: "venue" }),
+  "no title": buildExhibitionEvent({ title: undefined }),
+  "empty title value": buildExhibitionEvent({ title: "" }),
+  "empty summary value": buildExhibitionEvent({ summary: "" }),
+  "no age details": buildExhibitionEvent({ ageDetails: undefined }),
+  "partial age details": buildExhibitionEvent({ ageDetails: { minAge: 10 } }),
+  "invalid age details": buildExhibitionEvent({
     ageDetails: { minAge: -10, maxAge: 300 }
   }),
-  "no cost details": buildExhibition({ costDetails: undefined }),
-  "invalid cost details type": buildExhibition({
+  "no cost details": buildExhibitionEvent({ costDetails: undefined }),
+  "invalid cost details type": buildExhibitionEvent({
     costDetails: { type: "Invalid" }
   }),
-  "paid with invalid costs": buildExhibition({
+  "paid with invalid costs": buildExhibitionEvent({
     costDetails: { type: "Paid", minCost: -10, maxCost: 100000 }
   }),
-  "no booking details": buildExhibition({ bookingDetails: undefined }),
-  "invalid booking details type": buildExhibition({
+  "no booking details": buildExhibitionEvent({ bookingDetails: undefined }),
+  "invalid booking details type": buildExhibitionEvent({
     bookingDetails: { type: "Invalid" }
   }),
-  "booking required with invalid date booking opens": buildExhibition({
+  "booking required with invalid date booking opens": buildExhibitionEvent({
     bookingDetails: { type: "Required", dateBookingOpens: "invalid" }
   }),
-  "empty images": buildExhibition({ images: [] }),
-  "invalid image url": buildExhibition({ images: [""] }),
-  "empty tags": buildExhibition({ tags: [] }),
-  "invalid tag id": buildExhibition({
+  "empty images": buildExhibitionEvent({ images: [] }),
+  "invalid image url": buildExhibitionEvent({ images: [""] }),
+  "empty tags": buildExhibitionEvent({ tags: [] }),
+  "invalid tag id": buildExhibitionEvent({
     tags: [{ id: "invalid", label: "families" }]
   }),
-  "invalid tag label": buildExhibition({
+  "invalid tag label": buildExhibitionEvent({
     tags: [{ id: "audience/families", label: "" }]
   }),
-  "invalid tag": buildExhibition({
+  "invalid tag": buildExhibitionEvent({
     tags: [{}]
   }),
-  "missing exhibition details": buildExhibition({
+  "missing exhibition details": buildExhibitionEvent({
     exhibitionDetails: undefined
   }),
-  "empty exhibition details": buildExhibition({
+  "empty exhibition details": buildExhibitionEvent({
     exhibitionDetails: {}
   }),
-  "missing use venue opening times flag": buildExhibition({
-    exhibitionDetails: {
-      dateFrom: "2018-01-10",
-      dateTo: "2018-02-20",
-      hasTimedEntry: true
-    }
+  "missing use venue opening times flag": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({
+      useVenueOpeningTimes: undefined
+    })
   }),
-  "missing has timed entry": buildExhibition({
-    exhibitionDetails: {
-      dateFrom: "2018-01-10",
-      dateTo: "2018-02-20",
-      useVenueOpeningTimes: true
-    }
+  "missing has timed entry": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({ hasTimedEntry: undefined })
   }),
-  "missing exhibition date from": buildExhibition({
-    exhibitionDetails: {
-      dateTo: "2018-02-20",
-      useVenueOpeningTimes: true,
-      hasTimedEntry: true
-    }
+  "missing exhibition date from": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({ dateFrom: undefined })
   }),
-  "missing exhibition date to": buildExhibition({
-    exhibitionDetails: {
-      dateFrom: "2018-01-10",
-      useVenueOpeningTimes: true,
-      hasTimedEntry: true
-    }
+  "missing exhibition date to": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({ dateTo: undefined })
   }),
-  "opening rules incorrectly present when using venue opening times": buildExhibition(
+  "opening rules incorrectly present when using venue opening times": buildExhibitionEvent(
     {
-      exhibitionDetails: {
-        dateFrom: "2018-01-10",
-        dateTo: "2018-02-20",
+      exhibitionDetails: buildExhibitionDetails({
         useVenueOpeningTimes: true,
-        hasTimedEntry: true,
         openingRules: [],
         closureRules: []
-      }
+      })
     }
   ),
-  "opening rules not present when not using venue opening times": buildExhibition(
+  "opening rules not present when not using venue opening times": buildExhibitionEvent(
     {
-      exhibitionDetails: {
-        dateFrom: "2018-01-10",
-        dateTo: "2018-02-20",
-        useVenueOpeningTimes: false,
-        hasTimedEntry: true
-      }
+      exhibitionDetails: buildExhibitionDetails({
+        useVenueOpeningTimes: false
+      })
     }
   ),
-  "empty opening rules": buildExhibition({
-    exhibitionDetails: {
-      dateFrom: "2018-01-10",
-      dateTo: "2018-02-20",
+  "empty opening rules": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({
       useVenueOpeningTimes: false,
-      hasTimedEntry: true,
       openingRules: [],
       closureRules: []
-    }
+    })
   }),
-  "invalid date from": buildExhibition({
-    exhibitionDetails: {
-      dateFrom: "Invalid",
-      dateTo: "2018-02-20",
-      useVenueOpeningTimes: false,
-      hasTimedEntry: true,
-      openingRules: [
-        {
-          type: "Day",
-          dateForType: "Monday",
-          timeFrom: "12:00",
-          timeTo: "18:00"
-        }
-      ],
-      closureRules: []
-    }
+  "invalid date from": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({ dateFrom: "Invalid" })
   }),
-  "invalid date type for day opening rule": buildExhibition({
-    exhibitionDetails: {
-      dateFrom: "2018-01-10",
-      dateTo: "2018-02-20",
+  "invalid date to": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({ dateTo: "Invalid" })
+  }),
+  "invalid date type for day opening rule": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({
       useVenueOpeningTimes: false,
-      hasTimedEntry: true,
       openingRules: [
         {
           type: "Day",
@@ -483,14 +437,11 @@ const INVALID_EXHIBITIONS = {
         }
       ],
       closureRules: []
-    }
+    })
   }),
-  "no times for day opening rule": buildExhibition({
-    exhibitionDetails: {
-      dateFrom: "2018-01-10",
-      dateTo: "2018-02-20",
+  "no times for day opening rule": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({
       useVenueOpeningTimes: false,
-      hasTimedEntry: true,
       openingRules: [
         {
           type: "Day",
@@ -498,14 +449,11 @@ const INVALID_EXHIBITIONS = {
         }
       ],
       closureRules: []
-    }
+    })
   }),
-  "invalid date type for day closure rule": buildExhibition({
-    exhibitionDetails: {
-      dateFrom: "2018-01-10",
-      dateTo: "2018-02-20",
+  "invalid date type for day closure rule": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({
       useVenueOpeningTimes: false,
-      hasTimedEntry: true,
       openingRules: [
         {
           type: "Day",
@@ -522,14 +470,11 @@ const INVALID_EXHIBITIONS = {
           timeTo: "18:00"
         }
       ]
-    }
+    })
   }),
-  "invalid date type for date opening rule": buildExhibition({
-    exhibitionDetails: {
-      dateFrom: "2018-01-10",
-      dateTo: "2018-02-20",
+  "invalid date type for date opening rule": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({
       useVenueOpeningTimes: false,
-      hasTimedEntry: true,
       openingRules: [
         {
           type: "Date",
@@ -539,14 +484,11 @@ const INVALID_EXHIBITIONS = {
         }
       ],
       closureRules: []
-    }
+    })
   }),
-  "no times for date opening rule": buildExhibition({
-    exhibitionDetails: {
-      dateFrom: "2018-01-10",
-      dateTo: "2018-02-20",
+  "no times for date opening rule": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({
       useVenueOpeningTimes: false,
-      hasTimedEntry: true,
       openingRules: [
         {
           type: "Date",
@@ -554,87 +496,43 @@ const INVALID_EXHIBITIONS = {
         }
       ],
       closureRules: []
-    }
+    })
   })
 };
 
 const INVALID_PERFORMANCES = {
-  "missing isWorkshop flag": buildPerformance({
-    performanceDetails: {}
+  "missing isWorkshop flag": buildPerformanceEvent({
+    performanceDetails: buildPerformanceDetails({ isWorkshop: undefined })
   }),
-  "invalid performance date": buildPerformance({
-    performanceDetails: {
-      isWorkshop: false,
-      performances: [
-        {
-          date: "invalid",
-          time: "19:30",
-          isSoldOut: false,
-          isCancelled: false
-        }
-      ]
-    }
+  "invalid performance date": buildPerformanceEvent({
+    performanceDetails: buildPerformanceDetails({
+      performances: [buildPerformance({ date: "Invalid" })]
+    })
   }),
-  "missing performance date": buildPerformance({
-    performanceDetails: {
-      isWorkshop: false,
-      performances: [
-        {
-          time: "19:30",
-          isSoldOut: false,
-          isCancelled: false
-        }
-      ]
-    }
+  "missing performance date": buildPerformanceEvent({
+    performanceDetails: buildPerformanceDetails({
+      performances: [buildPerformance({ date: undefined })]
+    })
   }),
-  "invalid performance time": buildPerformance({
-    performanceDetails: {
-      isWorkshop: false,
-      performances: [
-        {
-          date: "2019-01-18",
-          time: "invalid",
-          isSoldOut: false,
-          isCancelled: false
-        }
-      ]
-    }
+  "invalid performance time": buildPerformanceEvent({
+    performanceDetails: buildPerformanceDetails({
+      performances: [buildPerformance({ time: "Invalid" })]
+    })
   }),
-  "missing performance time": buildPerformance({
-    performanceDetails: {
-      isWorkshop: false,
-      performances: [
-        {
-          date: "2019-01-18",
-          isSoldOut: false,
-          isCancelled: false
-        }
-      ]
-    }
+  "missing performance time": buildPerformanceEvent({
+    performanceDetails: buildPerformanceDetails({
+      performances: [buildPerformance({ time: undefined })]
+    })
   }),
-  "missing performance sold out flag": buildPerformance({
-    performanceDetails: {
-      isWorkshop: false,
-      performances: [
-        {
-          date: "2019-01-18",
-          time: "19:30",
-          isCancelled: false
-        }
-      ]
-    }
+  "missing performance sold out flag": buildPerformanceEvent({
+    performanceDetails: buildPerformanceDetails({
+      performances: [buildPerformance({ isSoldOut: undefined })]
+    })
   }),
-  "missing performance cancelled flag": buildPerformance({
-    performanceDetails: {
-      isWorkshop: false,
-      performances: [
-        {
-          date: "2019-01-18",
-          time: "19:30",
-          isSoldOut: false
-        }
-      ]
-    }
+  "missing performance cancelled flag": buildPerformanceEvent({
+    performanceDetails: buildPerformanceDetails({
+      performances: [buildPerformance({ isCancelled: undefined })]
+    })
   })
 };
 

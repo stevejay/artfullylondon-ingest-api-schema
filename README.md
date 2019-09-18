@@ -1,6 +1,7 @@
 # artfullylondon-ingest-api-schema
 
-Shared schema for the Artfully London ingest system
+Shared schema for the Artfully London ingest system.
+
 [![CircleCI](https://circleci.com/gh/stevejay/artfullylondon-ingest-api-schema/tree/master.svg?style=svg)](https://circleci.com/gh/stevejay/artfullylondon-ingest-api-schema/tree/master)
 
 ## Python
@@ -10,17 +11,11 @@ Shared schema for the Artfully London ingest system
 - https://setuptools.readthedocs.io/en/latest/setuptools.html#including-data-files
 - https://packaging.python.org/tutorials/packaging-projects/
 
-```
-cd ./python
-setup.py dir
-pip install setuptools
-pip install wheel
-pip install twine
-python3 setup.py sdist bdist_wheel
-python3 -m twine upload dist/*
-```
+## Schema
 
-// maxAge >= minAge
-// maxCost >= minCost
-// timeTo >= timeFrom
-// dateTo >= dateFrom
+### Constraints Not Captured
+
+- maxAge >= minAge
+- maxCost >= minCost
+- timeTo >= timeFrom
+- dateTo >= dateFrom
