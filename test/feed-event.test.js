@@ -1,7 +1,12 @@
 const Ajv = require("ajv");
 const schema = require("../schema/feed-event.json");
+const basicTypesSchema = require("../schema/basic-types.json");
 
-const AJV_OPTIONS = { allErrors: true };
+const createValidateFunc = () => {
+  const ajv = new Ajv({ allErrors: true });
+  ajv.addSchema(basicTypesSchema);
+  return ajv.compile(schema);
+};
 
 const buildExhibition = (customizations = {}) => ({
   entity: "event",
@@ -55,8 +60,7 @@ const buildPerformance = (customizations = {}) => ({
 });
 
 it("should be a valid schema", () => {
-  const ajv = new Ajv({ allErrors: true });
-  ajv.compile(schema);
+  createValidateFunc();
 });
 
 const VALID_EXHIBITIONS = {
@@ -315,12 +319,8 @@ describe("valid exhibitions", () => {
   Object.keys(VALID_EXHIBITIONS).forEach(key => {
     it(`should validate ${key}`, () => {
       const entity = VALID_EXHIBITIONS[key];
-      const ajv = new Ajv(AJV_OPTIONS);
-      const valid = ajv.validate(schema, entity);
-
-      if (!valid) {
-        console.error(ajv.errors);
-      }
+      const validate = createValidateFunc();
+      const valid = validate(entity);
       expect(valid).toBeTruthy();
     });
   });
@@ -330,8 +330,8 @@ describe("valid performances", () => {
   Object.keys(VALID_PERFORMANCES).forEach(key => {
     it(`should validate ${key}`, () => {
       const entity = VALID_PERFORMANCES[key];
-      const ajv = new Ajv(AJV_OPTIONS);
-      const valid = ajv.validate(schema, entity);
+      const validate = createValidateFunc();
+      const valid = validate(entity);
       expect(valid).toBeTruthy();
     });
   });
@@ -642,12 +642,8 @@ describe("invalid exhibitions", () => {
   Object.keys(INVALID_EXHIBITIONS).forEach(key => {
     it(`should validate ${key}`, () => {
       const entity = INVALID_EXHIBITIONS[key];
-      const ajv = new Ajv(AJV_OPTIONS);
-      const valid = ajv.validate(schema, entity);
-
-      if (valid) {
-        console.log(JSON.stringify(entity));
-      }
+      const validate = createValidateFunc();
+      const valid = validate(entity);
       expect(valid).toBeFalsy();
     });
   });
@@ -657,8 +653,8 @@ describe("invalid performances", () => {
   Object.keys(INVALID_PERFORMANCES).forEach(key => {
     it(`should validate ${key}`, () => {
       const entity = INVALID_PERFORMANCES[key];
-      const ajv = new Ajv(AJV_OPTIONS);
-      const valid = ajv.validate(schema, entity);
+      const validate = createValidateFunc();
+      const valid = validate(entity);
       expect(valid).toBeFalsy();
     });
   });

@@ -1,7 +1,10 @@
 const Ajv = require("ajv");
 const schema = require("../schema/feed-error.json");
 
-const AJV_OPTIONS = { allErrors: true };
+const createValidateFunc = () => {
+  const ajv = new Ajv({ allErrors: true });
+  return ajv.compile(schema);
+};
 
 const buildFeedError = (customizations = {}) => ({
   entity: "venue",
@@ -13,8 +16,7 @@ const buildFeedError = (customizations = {}) => ({
 });
 
 it("should be a valid schema", () => {
-  const ajv = new Ajv(AJV_OPTIONS);
-  ajv.compile(schema);
+  createValidateFunc();
 });
 
 const VALID_FEED_ERRORS = {
@@ -27,8 +29,8 @@ const VALID_FEED_ERRORS = {
 Object.keys(VALID_FEED_ERRORS).forEach(key => {
   it(`should validate ${key}`, () => {
     const entity = VALID_FEED_ERRORS[key];
-    const ajv = new Ajv(AJV_OPTIONS);
-    const valid = ajv.validate(schema, entity);
+    const validate = createValidateFunc();
+    const valid = validate(entity);
     expect(valid).toBeTruthy();
   });
 });
@@ -52,8 +54,8 @@ const INVALID_FEED_ERRORS = {
 Object.keys(INVALID_FEED_ERRORS).forEach(key => {
   it(`should validate ${key}`, () => {
     const entity = INVALID_FEED_ERRORS[key];
-    const ajv = new Ajv(AJV_OPTIONS);
-    const valid = ajv.validate(schema, entity);
+    const validate = createValidateFunc();
+    const valid = validate(entity);
     expect(valid).toBeFalsy();
   });
 });

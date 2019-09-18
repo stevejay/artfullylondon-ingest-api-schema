@@ -3,24 +3,6 @@
     "$id": "https://schemas.artfully.london/v1/feed-event.json",
     "type": "object",
     "definitions": {
-        "age": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 99
-        },
-        "date": {
-            "type": "string",
-            "pattern": "^[012]\\d\\d\\d-[01]\\d-[0123]\\d$"
-        },
-        "time": {
-            "type": "string",
-            "pattern": "^([01]\\d|2[0123]):[012345]\\d$"
-        },
-        "money": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 100000
-        },
         "day": {
             "type": "string",
             "enum": [
@@ -101,7 +83,7 @@
                     "description": "Minimum recommended age for the event",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/age"
+                            "$ref": "basic-types.json#/definitions/age"
                         }
                     ]
                 },
@@ -110,7 +92,7 @@
                     "description": "Maximum recommended age for the event (excluding guardians)",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/age"
+                            "$ref": "basic-types.json#/definitions/age"
                         }
                     ]
                 }
@@ -150,7 +132,7 @@
                                 "description": "Minimum cost for the event",
                                 "allOf": [
                                     {
-                                        "$ref": "#/definitions/money"
+                                        "$ref": "basic-types.json#/definitions/money"
                                     }
                                 ]
                             },
@@ -159,7 +141,7 @@
                                 "description": "Maximum cost for the event",
                                 "allOf": [
                                     {
-                                        "$ref": "#/definitions/money"
+                                        "$ref": "basic-types.json#/definitions/money"
                                     }
                                 ]
                             }
@@ -199,7 +181,7 @@
                                 "title": "Date Booking Opens",
                                 "allOf": [
                                     {
-                                        "$ref": "#/definitions/date"
+                                        "$ref": "basic-types.json#/definitions/date"
                                     }
                                 ]
                             }
@@ -233,7 +215,7 @@
                                 "description": "Date of the performance",
                                 "allOf": [
                                     {
-                                        "$ref": "#/definitions/date"
+                                        "$ref": "basic-types.json#/definitions/date"
                                     }
                                 ]
                             },
@@ -242,7 +224,7 @@
                                 "description": "Time of the performance",
                                 "allOf": [
                                     {
-                                        "$ref": "#/definitions/time"
+                                        "$ref": "basic-types.json#/definitions/time"
                                     }
                                 ]
                             },
@@ -283,7 +265,7 @@
                             "description": "Date the exhibition starts (inclusive)",
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/date"
+                                    "$ref": "basic-types.json#/definitions/date"
                                 }
                             ]
                         },
@@ -292,7 +274,7 @@
                             "description": "Date the exhibition ends (inclusive)",
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/date"
+                                    "$ref": "basic-types.json#/definitions/date"
                                 }
                             ]
                         },
@@ -323,7 +305,7 @@
                             "description": "Date the exhibition starts (inclusive)",
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/date"
+                                    "$ref": "basic-types.json#/definitions/date"
                                 }
                             ]
                         },
@@ -332,7 +314,7 @@
                             "description": "Date the exhibition ends (inclusive)",
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/date"
+                                    "$ref": "basic-types.json#/definitions/date"
                                 }
                             ]
                         },
@@ -368,7 +350,7 @@
                                         "title": "Time From",
                                         "allOf": [
                                             {
-                                                "$ref": "#/definitions/time"
+                                                "$ref": "basic-types.json#/definitions/time"
                                             }
                                         ]
                                     },
@@ -376,7 +358,7 @@
                                         "title": "Time To",
                                         "allOf": [
                                             {
-                                                "$ref": "#/definitions/time"
+                                                "$ref": "basic-types.json#/definitions/time"
                                             }
                                         ]
                                     }
@@ -415,7 +397,7 @@
                                                 "dateForType": {
                                                     "allOf": [
                                                         {
-                                                            "$ref": "#/definitions/date"
+                                                            "$ref": "basic-types.json#/definitions/date"
                                                         }
                                                     ]
                                                 }
@@ -475,7 +457,7 @@
                                         "title": "Time From",
                                         "allOf": [
                                             {
-                                                "$ref": "#/definitions/time"
+                                                "$ref": "basic-types.json#/definitions/time"
                                             }
                                         ]
                                     },
@@ -483,7 +465,7 @@
                                         "title": "Time To",
                                         "allOf": [
                                             {
-                                                "$ref": "#/definitions/time"
+                                                "$ref": "basic-types.json#/definitions/time"
                                             }
                                         ]
                                     }
@@ -522,7 +504,7 @@
                                                 "dateForType": {
                                                     "allOf": [
                                                         {
-                                                            "$ref": "#/definitions/date"
+                                                            "$ref": "basic-types.json#/definitions/date"
                                                         }
                                                     ]
                                                 }
