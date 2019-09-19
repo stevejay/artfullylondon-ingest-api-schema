@@ -81,6 +81,9 @@ it("should be a valid schema", () => {
 
 const VALID_EXHIBITIONS = {
   valid: buildExhibitionEvent(),
+  "with encoded character in venue entity id": buildExhibitionEvent({
+    venueEntityId: "exhibitions%2Fsome_event"
+  }),
   "with summary": buildExhibitionEvent({ summary: "The summary" }),
   "unknown cost": buildExhibitionEvent({ costDetails: { type: "Unknown" } }),
   free: buildExhibitionEvent({ costDetails: { type: "Free" } }),

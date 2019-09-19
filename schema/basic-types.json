@@ -5,7 +5,7 @@
         "componentId": {
             "description": "An ID that is safe to use as a URL component",
             "type": "string",
-            "pattern": "^([a-z0-9._~:@!$&'()*+,;=-]|(%[0-9a-f][0-9a-f]))+$"
+            "pattern": "^([a-z0-9._~:@!$&'()*+,;=-]|(%[0-9A-Fa-f][0-9A-Fa-f]))+$"
         },
         "version": {
             "description": "A version timestamp",
