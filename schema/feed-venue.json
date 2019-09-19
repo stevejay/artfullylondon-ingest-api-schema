@@ -34,8 +34,11 @@
         "rawContent": {
             "title": "Raw Content",
             "description": "The information to monitor for changes",
-            "type": "string",
-            "minLength": 1
+            "allOf": [
+                {
+                    "$ref": "basic-types.json#/definitions/rawContent"
+                }
+            ]
         }
     },
     "required": [

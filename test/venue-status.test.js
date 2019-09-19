@@ -36,7 +36,7 @@ Object.keys(VALID_VENUE_STATUSES).forEach(key => {
 });
 
 const INVALID_VENUE_STATUSES = {
-  "no venue ID": buildVenueStatus({ id: null }),
+  "no venue ID": buildVenueStatus({ id: undefined }),
   "empty venue ID": buildVenueStatus({ id: "" }),
   "invalid venue ID": buildVenueStatus({ id: "has/slash" }),
   "no version": buildVenueStatus({ version: undefined }),

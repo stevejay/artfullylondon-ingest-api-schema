@@ -11,7 +11,9 @@ Shared schema for the Artfully London ingest system.
 - https://setuptools.readthedocs.io/en/latest/setuptools.html#including-data-files
 - https://packaging.python.org/tutorials/packaging-projects/
 
-## Schema
+## TODO
+
+- Sort out title and descriptions.
 
 ### Constraints Not Captured
 

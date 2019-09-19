@@ -37,8 +37,11 @@
         },
         "url": {
             "title": "URL",
-            "type": "string",
-            "format": "uri"
+            "allOf": [
+                {
+                    "$ref": "basic-types.json#/definitions/url"
+                }
+            ]
         },
         "error": {
             "title": "Error Message",

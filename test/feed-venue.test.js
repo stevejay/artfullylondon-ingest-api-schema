@@ -1,10 +1,12 @@
 const Ajv = require("ajv");
 const schema = require("../schema/feed-venue.json");
 const basicTypesSchema = require("../schema/basic-types.json");
+const rulesTypesSchema = require("../schema/rules-types.json");
 
 const createValidateFunc = () => {
   const ajv = new Ajv({ allErrors: true });
   ajv.addSchema(basicTypesSchema);
+  ajv.addSchema(rulesTypesSchema);
   return ajv.compile(schema);
 };
 

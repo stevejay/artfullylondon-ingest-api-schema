@@ -1,6 +1,5 @@
 const Ajv = require("ajv");
-const schema = require("../schema/feed-event.json");
-const eventSchema = require("../schema/event.json");
+const schema = require("../schema/event.json");
 const basicTypesSchema = require("../schema/basic-types.json");
 const rulesTypesSchema = require("../schema/rules-types.json");
 
@@ -8,7 +7,6 @@ const createValidateFunc = () => {
   const ajv = new Ajv({ allErrors: true });
   ajv.addSchema(basicTypesSchema);
   ajv.addSchema(rulesTypesSchema);
-  ajv.addSchema(eventSchema);
   return ajv.compile(schema);
 };
 
@@ -34,10 +32,10 @@ const buildPerformance = (customizations = {}) => ({
 });
 
 const buildExhibitionEvent = (customizations = {}) => ({
-  entity: "event",
   venueId: "venue-id",
   venueEntityId: "venue-entity-id",
   version: 999,
+  entityStatus: "Publishable",
   eventType: "Exhibition",
   url: "http://test.com",
   title: "The Title",
@@ -57,10 +55,10 @@ const buildExhibitionEvent = (customizations = {}) => ({
 });
 
 const buildPerformanceEvent = (customizations = {}) => ({
-  entity: "event",
   venueId: "venue-id",
   venueEntityId: "venue-entity-id",
   version: 999,
+  entityStatus: "Publishable",
   eventType: "Performance",
   url: "http://test.com",
   title: "The Title",
@@ -276,6 +274,9 @@ const VALID_EXHIBITIONS = {
         }
       ]
     })
+  }),
+  "with old raw content": buildExhibitionEvent({
+    oldRawContent: "Old raw content"
   })
 };
 
@@ -338,9 +339,6 @@ describe("valid performances", () => {
 });
 
 const INVALID_EXHIBITIONS = {
-  "no entity value": buildExhibitionEvent({ entity: undefined }),
-  "empty entity value": buildExhibitionEvent({ entity: "" }),
-  "wrong entity value": buildExhibitionEvent({ entity: "venue" }),
   "no venue ID": buildExhibitionEvent({ venueId: null }),
   "empty venue ID": buildExhibitionEvent({ venueId: "" }),
   "invalid venue ID": buildExhibitionEvent({ venueId: "has/slash" }),
@@ -349,6 +347,9 @@ const INVALID_EXHIBITIONS = {
   "invalid venue entity ID": buildExhibitionEvent({
     venueEntityId: "has/slash"
   }),
+  "no entity status": buildExhibitionEvent({ entityStatus: undefined }),
+  "empty entity status": buildExhibitionEvent({ entityStatus: "" }),
+  "invalid entity status": buildExhibitionEvent({ entityStatus: "Invalid" }),
   "no raw content": buildExhibitionEvent({ rawContent: undefined }),
   "empty raw content": buildExhibitionEvent({ rawContent: "" }),
   "invalid event type": buildExhibitionEvent({ eventType: "Invalid" }),
@@ -510,7 +511,8 @@ const INVALID_EXHIBITIONS = {
       ],
       closingRules: []
     })
-  })
+  }),
+  "empty old raw content": buildExhibitionEvent({ oldRawContent: "" })
 };
 
 const INVALID_PERFORMANCES = {
