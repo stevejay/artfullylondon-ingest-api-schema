@@ -1,8 +1,10 @@
 const Ajv = require("ajv");
 const schema = require("../schema/feed-venue.json");
+const basicTypesSchema = require("../schema/basic-types.json");
 
 const createValidateFunc = () => {
   const ajv = new Ajv({ allErrors: true });
+  ajv.addSchema(basicTypesSchema);
   return ajv.compile(schema);
 };
 
@@ -10,6 +12,7 @@ const buildFeedVenue = (customizations = {}) => ({
   entity: "venue",
   venueId: "venue-id",
   venueEntityId: "venue-entity-id",
+  version: 999,
   rawContent: "the raw content",
   ...customizations
 });
@@ -19,7 +22,7 @@ it("should be a valid schema", () => {
 });
 
 const VALID_FEED_VENUES = {
-  "venue feed error": buildFeedVenue()
+  valid: buildFeedVenue()
 };
 
 Object.keys(VALID_FEED_VENUES).forEach(key => {
@@ -37,8 +40,10 @@ const INVALID_FEED_VENUES = {
   "wrong entity value": buildFeedVenue({ entity: "event" }),
   "no venue ID": buildFeedVenue({ venueId: null }),
   "empty venue ID": buildFeedVenue({ venueId: "" }),
+  "invalid venue ID": buildFeedVenue({ venueId: "has/slash" }),
   "no venue entity ID": buildFeedVenue({ venueEntityId: undefined }),
   "empty venue entity ID": buildFeedVenue({ venueEntityId: "" }),
+  "invalid venue entity ID": buildFeedVenue({ venueEntityId: "has/slash" }),
   "no raw content": buildFeedVenue({ rawContent: undefined }),
   "empty raw content": buildFeedVenue({ rawContent: "" })
 };

@@ -18,7 +18,20 @@
         "datePreset": {
             "type": "string",
             "enum": [
-                "ChristmasEve"
+                "BankHolidays",
+                "BankHolidayWeekends",
+                "ChristmasEve",
+                "ChristmasDay",
+                "BoxingDay",
+                "NewYearsEve",
+                "NewYearsDay",
+                "ChristmasPeriod",
+                "EasterSunday",
+                "EasterHolidayPeriod",
+                "AugustSaturdays",
+                "August",
+                "RoshHashanah",
+                "YomKippur"
             ]
         },
         "openingOrClosureRuleType": {
@@ -38,15 +51,27 @@
         },
         "venueId": {
             "title": "Venue ID",
-            "description": "ID of the venue",
-            "type": "string",
-            "minLength": 1
+            "allOf": [
+                {
+                    "$ref": "basic-types.json#/definitions/componentId"
+                }
+            ]
         },
         "venueEntityId": {
             "title": "Venue Entity ID",
-            "description": "Venue-unique ID of the entity",
-            "type": "string",
-            "minLength": 1
+            "allOf": [
+                {
+                    "$ref": "basic-types.json#/definitions/componentId"
+                }
+            ]
+        },
+        "version": {
+            "title": "Event Version",
+            "allOf": [
+                {
+                    "$ref": "basic-types.json#/definitions/version"
+                }
+            ]
         },
         "eventType": {
             "title": "Event Type",
@@ -613,6 +638,7 @@
                     "entity",
                     "venueId",
                     "venueEntityId",
+                    "version",
                     "eventType",
                     "url",
                     "title",
@@ -637,6 +663,7 @@
                     "entity",
                     "venueId",
                     "venueEntityId",
+                    "version",
                     "eventType",
                     "url",
                     "title",

@@ -2,8 +2,18 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://schemas.artfully.london/v1/basic-types.json",
     "definitions": {
+        "componentId": {
+            "description": "An ID that is safe to use as a URL component",
+            "type": "string",
+            "pattern": "^([a-z0-9._~:@!$&'()*+,;=-]|(%[0-9a-f][0-9a-f]))+$"
+        },
+        "version": {
+            "description": "A version timestamp",
+            "type": "integer",
+            "minimum": 1
+        },
         "age": {
-            "type": "number",
+            "type": "integer",
             "minimum": 0,
             "maximum": 99
         },
@@ -25,9 +35,46 @@
         },
         "money": {
             "description": "A monetary value in pence",
-            "type": "number",
+            "type": "integer",
             "minimum": 0,
             "maximum": 100000
+        },
+        "disabledBathroom": {
+            "type": "string",
+            "enum": [
+                "Present",
+                "NotPresent",
+                "Unknown",
+                "NotApplicable"
+            ]
+        },
+        "entityStatus": {
+            "type": "string",
+            "enum": [
+                "NewPendingReview",
+                "Publishable",
+                "PublishablePendingReview"
+            ]
+        },
+        "hearingFacilities": {
+            "type": "string",
+            "enum": [
+                "HearingLoops",
+                "PartialHearingLoops",
+                "NoHearingLoops",
+                "Unknown",
+                "NotApplicable"
+            ]
+        },
+        "wheelchairAccess": {
+            "type": "string",
+            "enum": [
+                "FullAccess",
+                "PartialAccess",
+                "NoAccess",
+                "Unknown",
+                "NotApplicable"
+            ]
         }
     }
 }

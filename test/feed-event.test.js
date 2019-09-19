@@ -33,6 +33,7 @@ const buildExhibitionEvent = (customizations = {}) => ({
   entity: "event",
   venueId: "venue-id",
   venueEntityId: "venue-entity-id",
+  version: 999,
   eventType: "Exhibition",
   url: "http://test.com",
   title: "The Title",
@@ -55,6 +56,7 @@ const buildPerformanceEvent = (customizations = {}) => ({
   entity: "event",
   venueId: "venue-id",
   venueEntityId: "venue-entity-id",
+  version: 999,
   eventType: "Performance",
   url: "http://test.com",
   title: "The Title",
@@ -334,8 +336,12 @@ const INVALID_EXHIBITIONS = {
   "wrong entity value": buildExhibitionEvent({ entity: "venue" }),
   "no venue ID": buildExhibitionEvent({ venueId: null }),
   "empty venue ID": buildExhibitionEvent({ venueId: "" }),
+  "invalid venue ID": buildExhibitionEvent({ venueId: "has/slash" }),
   "no venue entity ID": buildExhibitionEvent({ venueEntityId: undefined }),
   "empty venue entity ID": buildExhibitionEvent({ venueEntityId: "" }),
+  "invalid venue entity ID": buildExhibitionEvent({
+    venueEntityId: "has/slash"
+  }),
   "no raw content": buildExhibitionEvent({ rawContent: undefined }),
   "empty raw content": buildExhibitionEvent({ rawContent: "" }),
   "invalid event type": buildExhibitionEvent({ eventType: "Invalid" }),
