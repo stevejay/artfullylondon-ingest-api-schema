@@ -104,11 +104,11 @@
                 }
             ]
         },
-        "images": {
+        "imageUrls": {
             "title": "Image URLs",
             "allOf": [
                 {
-                    "$ref": "basic-types.json#/definitions/images"
+                    "$ref": "image-types.json#/definitions/imageUrls"
                 }
             ]
         },

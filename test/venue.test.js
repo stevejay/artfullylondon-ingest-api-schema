@@ -2,11 +2,13 @@ const Ajv = require("ajv");
 const schema = require("../schema/venue.json");
 const basicTypesSchema = require("../schema/basic-types.json");
 const rulesTypesSchema = require("../schema/rules-types.json");
+const imageTypesSchema = require("../schema/image-types.json");
 
 const createValidateFunc = () => {
   const ajv = new Ajv({ allErrors: true });
   ajv.addSchema(basicTypesSchema);
   ajv.addSchema(rulesTypesSchema);
+  ajv.addSchema(imageTypesSchema);
   return ajv.compile(schema);
 };
 
@@ -15,7 +17,6 @@ const buildVenue = (customizations = {}) => ({
   version: 999,
   entityStatus: "Publishable",
   title: "The Title",
-  url: "http://example.com/url",
   address: "The Street\nThe Town",
   postcode: "NE26 4NN",
   latitude: 51,
@@ -23,17 +24,7 @@ const buildVenue = (customizations = {}) => ({
   wheelchairAccess: "FullAccess",
   disabledBathroom: "Present",
   hearingFacilities: "HearingLoops",
-  openingRules: [
-    {
-      type: "Day",
-      dateForType: "Monday",
-      timeFrom: "12:00",
-      timeTo: "18:00"
-    }
-  ],
-  closingRules: [],
   hasPermanentCollection: true,
-  rawContent: "The raw content",
   ...customizations
 });
 
@@ -43,6 +34,7 @@ it("should be a valid schema", () => {
 
 const VALID_VENUES = {
   valid: buildVenue(),
+  "with url": buildVenue({ url: "http://example.com/url" }),
   "with description": buildVenue({ description: "The description" }),
   "with description and credit": buildVenue({
     description: "The description",
@@ -50,7 +42,28 @@ const VALID_VENUES = {
   }),
   "with email": buildVenue({ email: "foo@foo.com" }),
   "with telephone": buildVenue({ telephone: "07930427752" }),
-  "with images": buildVenue({ images: ["https://test.com/image.png"] }),
+  "with images": buildVenue({
+    images: [{ id: "11111111222222223333333344444444", ratio: 1 }]
+  }),
+  "with opening rules": buildVenue({
+    openingRules: [
+      {
+        type: "Day",
+        dateForType: "Monday",
+        timeFrom: "12:00",
+        timeTo: "18:00"
+      }
+    ]
+  }),
+  "with closing rules": buildVenue({
+    closingRules: [
+      {
+        type: "Date",
+        dateForType: "2019-01-18"
+      }
+    ]
+  }),
+  "with raw content": buildVenue({ rawContent: "Raw content" }),
   "with old raw content": buildVenue({ oldRawContent: "Old raw content" })
 };
 
@@ -73,9 +86,8 @@ const INVALID_VENUES = {
   "no entity status": buildVenue({ entityStatus: undefined }),
   "empty entity status": buildVenue({ entityStatus: "" }),
   "invalid entity status": buildVenue({ entityStatus: "Invalid" }),
-  "no url": buildVenue({ url: undefined }),
   "empty url value": buildVenue({ url: "" }),
-  "wrong url value": buildVenue({ url: "venue" }),
+  "invalid url value": buildVenue({ url: "Invalid" }),
   "no title": buildVenue({ title: undefined }),
   "empty title value": buildVenue({ title: "" }),
   "empty description": buildVenue({ description: "" }),
@@ -110,12 +122,25 @@ const INVALID_VENUES = {
     hasPermanentCollection: "Invalid"
   }),
   "empty images": buildVenue({ images: [] }),
-  "invalid image url": buildVenue({ images: ["Invalid"] }),
-  "no raw content": buildVenue({ rawContent: undefined }),
+  "invalid image id": buildVenue({
+    images: [{ id: "Invalid", ratio: 1 }]
+  }),
+  "missing image id": buildVenue({
+    images: [{ id: undefined, ratio: 1 }]
+  }),
+  "invalid image ratio": buildVenue({
+    images: [{ id: "11111111222222223333333344444444", ratio: "Invalid" }]
+  }),
+  "missing image ratio": buildVenue({
+    images: [{ id: "11111111222222223333333344444444", ratio: undefined }]
+  }),
   "empty raw content": buildVenue({ rawContent: "" }),
   "empty old raw content": buildVenue({ oldRawContent: "" }),
   "empty opening rules": buildVenue({
     openingRules: []
+  }),
+  "empty closing rules": buildVenue({
+    closingRules: []
   }),
   "invalid date type for day opening rule": buildVenue({
     openingRules: [
@@ -169,8 +194,7 @@ const INVALID_VENUES = {
         type: "Date",
         dateForType: "2018-01-18"
       }
-    ],
-    closingRules: []
+    ]
   })
 };
 

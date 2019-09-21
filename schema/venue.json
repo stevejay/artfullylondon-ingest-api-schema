@@ -45,8 +45,12 @@
         },
         "description": {
             "title": "Description",
+            "description": "Given as HTML",
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "examples": [
+                "<p>A description</p>"
+            ]
         },
         "descriptionCredit": {
             "title": "Description Credit",
@@ -133,10 +137,10 @@
             ]
         },
         "images": {
-            "title": "Image URLs",
+            "title": "Images",
             "allOf": [
                 {
-                    "$ref": "basic-types.json#/definitions/images"
+                    "$ref": "image-types.json#/definitions/images"
                 }
             ]
         },
@@ -164,7 +168,6 @@
         "version",
         "entityStatus",
         "title",
-        "url",
         "address",
         "postcode",
         "latitude",
@@ -172,9 +175,6 @@
         "wheelchairAccess",
         "disabledBathroom",
         "hearingFacilities",
-        "openingRules",
-        "closingRules",
-        "hasPermanentCollection",
-        "rawContent"
+        "hasPermanentCollection"
     ]
 }

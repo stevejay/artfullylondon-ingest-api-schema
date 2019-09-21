@@ -2,11 +2,13 @@ const Ajv = require("ajv");
 const schema = require("../schema/event.json");
 const basicTypesSchema = require("../schema/basic-types.json");
 const rulesTypesSchema = require("../schema/rules-types.json");
+const imageTypesSchema = require("../schema/image-types.json");
 
 const createValidateFunc = () => {
   const ajv = new Ajv({ allErrors: true });
   ajv.addSchema(basicTypesSchema);
   ajv.addSchema(rulesTypesSchema);
+  ajv.addSchema(imageTypesSchema);
   return ajv.compile(schema);
 };
 
@@ -108,7 +110,7 @@ const VALID_EXHIBITIONS = {
     bookingDetails: { type: "Required", dateBookingOpens: "2018-01-18" }
   }),
   "with images": buildExhibitionEvent({
-    images: ["https://test.com/image.png"]
+    images: [{ id: "11111111222222223333333344444444", ratio: 1 }]
   }),
   "with tags": buildExhibitionEvent({
     tags: [{ id: "audience/families", label: "families" }]
@@ -123,8 +125,7 @@ const VALID_EXHIBITIONS = {
           timeFrom: "12:00",
           timeTo: "18:00"
         }
-      ],
-      closingRules: []
+      ]
     })
   }),
   "has day closure opening rule with times": buildExhibitionEvent({
@@ -177,8 +178,7 @@ const VALID_EXHIBITIONS = {
           timeFrom: "12:00",
           timeTo: "18:00"
         }
-      ],
-      closingRules: []
+      ]
     })
   }),
   "has date closure rule with times": buildExhibitionEvent({
@@ -231,8 +231,7 @@ const VALID_EXHIBITIONS = {
           timeFrom: "12:00",
           timeTo: "18:00"
         }
-      ],
-      closingRules: []
+      ]
     })
   }),
   "has preset closure rule with times": buildExhibitionEvent({
@@ -304,7 +303,7 @@ const VALID_PERFORMANCES = {
     bookingDetails: { type: "Required", dateBookingOpens: "2018-01-18" }
   }),
   "with images": buildPerformanceEvent({
-    images: ["https://test.com/image.png"]
+    images: [{ id: "11111111222222223333333344444444", ratio: 1 }]
   }),
   "with tags": buildPerformanceEvent({
     tags: [{ id: "audience/families", label: "families" }]
@@ -379,7 +378,18 @@ const INVALID_EXHIBITIONS = {
     bookingDetails: { type: "Required", dateBookingOpens: "invalid" }
   }),
   "empty images": buildExhibitionEvent({ images: [] }),
-  "invalid image url": buildExhibitionEvent({ images: [""] }),
+  "invalid image id": buildExhibitionEvent({
+    images: [{ id: "Invalid", ratio: 1 }]
+  }),
+  "missing image id": buildExhibitionEvent({
+    images: [{ id: undefined, ratio: 1 }]
+  }),
+  "invalid image ratio": buildExhibitionEvent({
+    images: [{ id: "11111111222222223333333344444444", ratio: "Invalid" }]
+  }),
+  "missing image ratio": buildExhibitionEvent({
+    images: [{ id: "11111111222222223333333344444444", ratio: undefined }]
+  }),
   "empty tags": buildExhibitionEvent({ tags: [] }),
   "invalid tag id": buildExhibitionEvent({
     tags: [{ id: "invalid", label: "families" }]
@@ -429,7 +439,12 @@ const INVALID_EXHIBITIONS = {
   "empty opening rules": buildExhibitionEvent({
     exhibitionDetails: buildExhibitionDetails({
       useVenueOpeningTimes: false,
-      openingRules: [],
+      openingRules: []
+    })
+  }),
+  "empty closing rules": buildExhibitionEvent({
+    exhibitionDetails: buildExhibitionDetails({
+      useVenueOpeningTimes: false,
       closingRules: []
     })
   }),
@@ -449,8 +464,7 @@ const INVALID_EXHIBITIONS = {
           timeFrom: "12:00",
           timeTo: "18:00"
         }
-      ],
-      closingRules: []
+      ]
     })
   }),
   "no times for day opening rule": buildExhibitionEvent({
@@ -461,8 +475,7 @@ const INVALID_EXHIBITIONS = {
           type: "Day",
           dateForType: "Monday"
         }
-      ],
-      closingRules: []
+      ]
     })
   }),
   "invalid date type for day closure rule": buildExhibitionEvent({
@@ -496,8 +509,7 @@ const INVALID_EXHIBITIONS = {
           timeFrom: "12:00",
           timeTo: "18:00"
         }
-      ],
-      closingRules: []
+      ]
     })
   }),
   "no times for date opening rule": buildExhibitionEvent({
@@ -508,8 +520,7 @@ const INVALID_EXHIBITIONS = {
           type: "Date",
           dateForType: "2018-01-18"
         }
-      ],
-      closingRules: []
+      ]
     })
   }),
   "empty old raw content": buildExhibitionEvent({ oldRawContent: "" })

@@ -172,6 +172,14 @@
                                 "title": "Is Performance Cancelled",
                                 "description": "If the performance is cancelled",
                                 "type": "boolean"
+                            },
+                            "tags": {
+                                "title": "Performance-Specific Tags",
+                                "allOf": [
+                                    {
+                                        "$ref": "#/definitions/tags"
+                                    }
+                                ]
                             }
                         },
                         "additionalProperties": false,
@@ -286,8 +294,7 @@
                         "dateTo",
                         "useVenueOpeningTimes",
                         "hasTimedEntry",
-                        "openingRules",
-                        "closingRules"
+                        "openingRules"
                     ]
                 }
             ]
@@ -424,10 +431,10 @@
             ]
         },
         "images": {
-            "title": "Image URLs",
+            "title": "Images",
             "allOf": [
                 {
-                    "$ref": "basic-types.json#/definitions/images"
+                    "$ref": "image-types.json#/definitions/images"
                 }
             ]
         },

@@ -21,3 +21,15 @@ Shared schema for the Artfully London ingest system.
 - maxCost >= minCost
 - timeTo >= timeFrom
 - dateTo >= dateFrom
+
+- rename description to descriptionHTML ??
+- tags on performances
+- add londonArea to venue?
+- add schema value?
+
+exports.LOCATION_AREA_TYPE_CENTRAL = 'Central';
+exports.LOCATION_AREA_TYPE_WEST = 'West';
+exports.LOCATION_AREA_TYPE_NORTH = 'North';
+exports.LOCATION_AREA_TYPE_EAST = 'East';
+exports.LOCATION_AREA_TYPE_SOUTH_EAST = 'SouthEast';
+exports.LOCATION_AREA_TYPE_SOUTH_WEST = 'SouthWest';

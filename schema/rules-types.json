@@ -217,7 +217,8 @@
                     "dateForType"
                 ],
                 "additionalProperties": false
-            }
+            },
+            "minItems": 1
         }
     }
 }
