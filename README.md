@@ -13,8 +13,6 @@ Shared schema for the Artfully London ingest system.
 
 ## TODO
 
-- Sort out title and descriptions.
-
 ### Constraints Not Captured
 
 - maxAge >= minAge
@@ -22,8 +20,8 @@ Shared schema for the Artfully London ingest system.
 - timeTo >= timeFrom
 - dateTo >= dateFrom
 
-- rename description to descriptionHTML ??
-- tags on performances
+### Possible Schema Changes
+
 - add londonArea to venue?
 - add schema value?
 

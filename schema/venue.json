@@ -45,17 +45,11 @@
         },
         "description": {
             "title": "Description",
-            "description": "Given as HTML",
-            "type": "string",
-            "minLength": 1,
-            "examples": [
-                "<p>A description</p>"
+            "allOf": [
+                {
+                    "$ref": "basic-types.json#/definitions/prose"
+                }
             ]
-        },
-        "descriptionCredit": {
-            "title": "Description Credit",
-            "type": "string",
-            "minLength": 1
         },
         "address": {
             "title": "Address",
@@ -144,21 +138,19 @@
                 }
             ]
         },
-        "rawContent": {
-            "title": "Raw Content",
-            "description": "The information to monitor for changes",
+        "currentWatchedContent": {
+            "title": "Current Watched Content",
             "allOf": [
                 {
-                    "$ref": "basic-types.json#/definitions/rawContent"
+                    "$ref": "basic-types.json#/definitions/watchedContent"
                 }
             ]
         },
-        "oldRawContent": {
-            "title": "Old Raw Content",
-            "description": "Previous version of the information to monitor for changes",
+        "publishedWatchedContent": {
+            "title": "Published Watched Content",
             "allOf": [
                 {
-                    "$ref": "basic-types.json#/definitions/rawContent"
+                    "$ref": "basic-types.json#/definitions/watchedContent"
                 }
             ]
         }

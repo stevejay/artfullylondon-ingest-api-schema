@@ -14,8 +14,7 @@
             "type": "object",
             "properties": {
                 "minAge": {
-                    "title": "Minimum Age",
-                    "description": "Minimum recommended age for the event",
+                    "title": "Minimum Age (Excluding Guardians)",
                     "allOf": [
                         {
                             "$ref": "basic-types.json#/definitions/age"
@@ -23,8 +22,7 @@
                     ]
                 },
                 "maxAge": {
-                    "title": "Maximum Age",
-                    "description": "Maximum recommended age for the event (excluding guardians)",
+                    "title": "Maximum Age (Excluding Guardians)",
                     "allOf": [
                         {
                             "$ref": "basic-types.json#/definitions/age"
@@ -64,7 +62,6 @@
                         "properties": {
                             "minCost": {
                                 "title": "Minimum Cost",
-                                "description": "Minimum cost for the event",
                                 "allOf": [
                                     {
                                         "$ref": "basic-types.json#/definitions/money"
@@ -73,7 +70,6 @@
                             },
                             "maxCost": {
                                 "title": "Maximum Cost",
-                                "description": "Maximum cost for the event",
                                 "allOf": [
                                     {
                                         "$ref": "basic-types.json#/definitions/money"
@@ -133,21 +129,17 @@
             "properties": {
                 "isWorkshop": {
                     "title": "Is Workshop",
-                    "description": "If the event is a workshop",
                     "type": "boolean"
                 },
                 "performances": {
                     "title": "Performances",
-                    "description": "Performances of the event",
                     "type": "array",
                     "items": {
                         "title": "Performance",
-                        "description": "Performance of the event",
                         "type": "object",
                         "properties": {
                             "date": {
                                 "title": "Performance Date",
-                                "description": "Date of the performance",
                                 "allOf": [
                                     {
                                         "$ref": "basic-types.json#/definitions/date"
@@ -156,7 +148,6 @@
                             },
                             "time": {
                                 "title": "Performance Time",
-                                "description": "Time of the performance",
                                 "allOf": [
                                     {
                                         "$ref": "basic-types.json#/definitions/time"
@@ -165,12 +156,10 @@
                             },
                             "isSoldOut": {
                                 "title": "Is Performance Sold Out",
-                                "description": "If the performance is sold out",
                                 "type": "boolean"
                             },
                             "isCancelled": {
                                 "title": "Is Performance Cancelled",
-                                "description": "If the performance is cancelled",
                                 "type": "boolean"
                             },
                             "tags": {
@@ -204,8 +193,7 @@
                     "type": "object",
                     "properties": {
                         "dateFrom": {
-                            "title": "Date From",
-                            "description": "Date the exhibition starts (inclusive)",
+                            "title": "Date From (Inclusive)",
                             "allOf": [
                                 {
                                     "$ref": "basic-types.json#/definitions/date"
@@ -213,8 +201,7 @@
                             ]
                         },
                         "dateTo": {
-                            "title": "Date To",
-                            "description": "Date the exhibition ends (inclusive)",
+                            "title": "Date To (Inclusive)",
                             "allOf": [
                                 {
                                     "$ref": "basic-types.json#/definitions/date"
@@ -223,12 +210,10 @@
                         },
                         "useVenueOpeningTimes": {
                             "title": "Use Venue Opening Times",
-                            "description": "If the exhibition uses the venue's opening times",
                             "const": true
                         },
                         "hasTimedEntry": {
                             "title": "Has Timed Entry",
-                            "description": "If the exhibition has timed entry",
                             "type": "boolean"
                         }
                     },
@@ -244,8 +229,7 @@
                     "type": "object",
                     "properties": {
                         "dateFrom": {
-                            "title": "Date From",
-                            "description": "Date the exhibition starts (inclusive)",
+                            "title": "Date From (Inclusive)",
                             "allOf": [
                                 {
                                     "$ref": "basic-types.json#/definitions/date"
@@ -253,8 +237,7 @@
                             ]
                         },
                         "dateTo": {
-                            "title": "Date To",
-                            "description": "Date the exhibition ends (inclusive)",
+                            "title": "Date To (Inclusive)",
                             "allOf": [
                                 {
                                     "$ref": "basic-types.json#/definitions/date"
@@ -263,12 +246,10 @@
                         },
                         "useVenueOpeningTimes": {
                             "title": "Use Venue Opening Times",
-                            "description": "If the exhibition uses the venue's opening times",
                             "const": false
                         },
                         "hasTimedEntry": {
                             "title": "Has Timed Entry",
-                            "description": "If the exhibition has timed entry",
                             "type": "boolean"
                         },
                         "openingRules": {
@@ -386,7 +367,7 @@
             "title": "Summary",
             "allOf": [
                 {
-                    "$ref": "basic-types.json#/definitions/summary"
+                    "$ref": "basic-types.json#/definitions/prose"
                 }
             ]
         },
@@ -446,21 +427,19 @@
                 }
             ]
         },
-        "rawContent": {
-            "title": "Raw Content",
-            "description": "The information to monitor for changes",
+        "currentWatchedContent": {
+            "title": "Current Watched Content",
             "allOf": [
                 {
-                    "$ref": "basic-types.json#/definitions/rawContent"
+                    "$ref": "basic-types.json#/definitions/watchedContent"
                 }
             ]
         },
-        "oldRawContent": {
-            "title": "Old Raw Content",
-            "description": "Previous version of the information to monitor for changes",
+        "publishedWatchedContent": {
+            "title": "Published Watched Content",
             "allOf": [
                 {
-                    "$ref": "basic-types.json#/definitions/rawContent"
+                    "$ref": "basic-types.json#/definitions/watchedContent"
                 }
             ]
         }
@@ -488,7 +467,7 @@
                     "costDetails",
                     "bookingDetails",
                     "performanceDetails",
-                    "rawContent"
+                    "currentWatchedContent"
                 ]
             }
         },
@@ -513,7 +492,7 @@
                     "costDetails",
                     "bookingDetails",
                     "exhibitionDetails",
-                    "rawContent"
+                    "currentWatchedContent"
                 ]
             }
         }

@@ -54,7 +54,7 @@ const buildExhibitionEvent = (customizations = {}) => ({
     type: "Unknown"
   },
   exhibitionDetails: buildExhibitionDetails(),
-  rawContent: "the raw content",
+  watchedContent: "the watched content",
   ...customizations
 });
 
@@ -77,7 +77,7 @@ const buildPerformanceEvent = (customizations = {}) => ({
     type: "Unknown"
   },
   performanceDetails: buildPerformanceDetails(),
-  rawContent: "the raw content",
+  watchedContent: "the watched content",
   ...customizations
 });
 
@@ -90,7 +90,12 @@ const VALID_EXHIBITIONS = {
   "with encoded character in venue entity id": buildExhibitionEvent({
     venueEntityId: "exhibitions%2Fsome_event"
   }),
-  "with summary": buildExhibitionEvent({ summary: "The summary" }),
+  "with summary": buildExhibitionEvent({
+    summary: {
+      mimeType: "text/html",
+      value: "<p>The summary</p>"
+    }
+  }),
   "unknown cost": buildExhibitionEvent({ costDetails: { type: "Unknown" } }),
   free: buildExhibitionEvent({ costDetails: { type: "Free" } }),
   "paid with unknown cost": buildExhibitionEvent({
@@ -280,7 +285,12 @@ const VALID_EXHIBITIONS = {
 
 const VALID_PERFORMANCES = {
   valid: buildPerformanceEvent(),
-  "with summary": buildPerformanceEvent({ summary: "The summary" }),
+  "with summary": buildPerformanceEvent({
+    summary: {
+      mimeType: "text/html",
+      value: "<p>The summary</p>"
+    }
+  }),
   "unknown cost": buildPerformanceEvent({ costDetails: { type: "Unknown" } }),
   free: buildPerformanceEvent({ costDetails: { type: "Free" } }),
   "paid with unknown cost": buildPerformanceEvent({
@@ -348,15 +358,33 @@ const INVALID_EXHIBITIONS = {
   "invalid venue entity ID": buildExhibitionEvent({
     venueEntityId: "has/slash"
   }),
-  "no raw content": buildExhibitionEvent({ rawContent: undefined }),
-  "empty raw content": buildExhibitionEvent({ rawContent: "" }),
+  "no watched content": buildExhibitionEvent({ watchedContent: undefined }),
+  "empty watched content": buildExhibitionEvent({ watchedContent: "" }),
   "invalid event type": buildExhibitionEvent({ eventType: "Invalid" }),
   "no url": buildExhibitionEvent({ url: undefined }),
   "empty url value": buildExhibitionEvent({ url: "" }),
   "wrong url value": buildExhibitionEvent({ url: "venue" }),
   "no title": buildExhibitionEvent({ title: undefined }),
   "empty title value": buildExhibitionEvent({ title: "" }),
-  "empty summary value": buildExhibitionEvent({ summary: "" }),
+  "empty summary": buildExhibitionEvent({ summary: {} }),
+  "empty summary type": buildExhibitionEvent({
+    summary: {
+      mimeType: "",
+      value: "The summary"
+    }
+  }),
+  "invalid summary type": buildExhibitionEvent({
+    summary: {
+      mimeType: "Invalid",
+      value: "The summary"
+    }
+  }),
+  "empty summary value": buildExhibitionEvent({
+    summary: {
+      mimeType: "text/plain",
+      value: ""
+    }
+  }),
   "no age details": buildExhibitionEvent({ ageDetails: undefined }),
   "partial age details": buildExhibitionEvent({ ageDetails: { minAge: 10 } }),
   "invalid age details": buildExhibitionEvent({

@@ -31,12 +31,11 @@
                 }
             ]
         },
-        "rawContent": {
-            "title": "Raw Content",
-            "description": "The information to monitor for changes",
+        "watchedContent": {
+            "title": "Watched Content",
             "allOf": [
                 {
-                    "$ref": "basic-types.json#/definitions/rawContent"
+                    "$ref": "basic-types.json#/definitions/watchedContent"
                 }
             ]
         }
@@ -46,6 +45,6 @@
         "venueId",
         "venueEntityId",
         "version",
-        "rawContent"
+        "watchedContent"
     ]
 }

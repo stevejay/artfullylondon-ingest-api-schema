@@ -32,11 +32,10 @@
                     },
                     "dominantColor": {
                         "title": "Dominant Color",
-                        "description": "Color as an RGB hex value",
-                        "type": "string",
-                        "pattern": "^[A-Fa-f0-9]{6}$",
-                        "examples": [
-                            "FF00AA"
+                        "allOf": [
+                            {
+                                "$ref": "basic-types.json#/definitions/hexColor"
+                            }
                         ]
                     }
                 },

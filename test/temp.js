@@ -1,10 +1,13 @@
 const fs = require("fs");
 const readline = require("readline");
 const Ajv = require("ajv");
+var AWS = require("aws-sdk");
 const schema = require("../schema/venue.json");
 const basicTypesSchema = require("../schema/basic-types.json");
 const rulesTypesSchema = require("../schema/rules-types.json");
 const imageTypesSchema = require("../schema/image-types.json");
+
+AWS.config.update({ region: "eu-west-1" });
 
 const createValidateFunc = () => {
   const ajv = new Ajv({ allErrors: true });
@@ -23,6 +26,9 @@ const DAYS = [
   "Saturday",
   "Sunday"
 ];
+
+// Create S3 service object
+s3 = new AWS.S3({ apiVersion: "2006-03-01" });
 
 async function processLineByLine() {
   const fileStream = fs.createReadStream(
@@ -81,7 +87,10 @@ async function processLineByLine() {
       }
 
       if (venue.description && venue.description.s) {
-        result.description = venue.description.s;
+        result.description = {
+          type: "text/html",
+          value: venue.description.s
+        };
       }
 
       if (venue.email && venue.email.s) {
@@ -224,6 +233,17 @@ async function processLineByLine() {
       if (!valid) {
         console.error("NOT VALID", JSON.stringify(result));
       }
+
+      const key = `${result.id}/venue.json`;
+
+      const uploadParams = {
+        Bucket: "artfullylondon-prod-feed-entities",
+        Key: key,
+        Body: JSON.stringify(result),
+        ContentType: "application/json"
+      };
+
+      //   await s3.upload(uploadParams).promise();
 
       //   console.log(JSON.stringify(result));
     } catch {

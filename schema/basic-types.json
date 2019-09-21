@@ -37,6 +37,14 @@
                 "13:00"
             ]
         },
+        "hexColor": {
+            "description": "Color as an RGB hex value",
+            "type": "string",
+            "pattern": "^[A-Fa-f0-9]{6}$",
+            "examples": [
+                "FF00AA"
+            ]
+        },
         "money": {
             "description": "A monetary value in pence",
             "type": "integer",
@@ -51,17 +59,12 @@
                 "PublishablePendingReview"
             ]
         },
-        "rawContent": {
+        "watchedContent": {
             "type": "string",
             "minLength": 1
         },
         "title": {
             "type": "string",
-            "minLength": 1
-        },
-        "summary": {
-            "type": "string",
-            "description": "A single paragraph of text (non-HTML)",
             "minLength": 1
         },
         "disabledBathroom": {
@@ -130,6 +133,33 @@
                 "August",
                 "RoshHashanah",
                 "YomKippur"
+            ]
+        },
+        "prose": {
+            "type": "object",
+            "properties": {
+                "mimeType": {
+                    "title": "Type",
+                    "type": "string",
+                    "enum": [
+                        "text/plain",
+                        "text/html"
+                    ]
+                },
+                "value": {
+                    "title": "Value",
+                    "type": "string",
+                    "minLength": 1
+                },
+                "credit": {
+                    "title": "Credit",
+                    "type": "string",
+                    "minLength": 1
+                }
+            },
+            "required": [
+                "mimeType",
+                "value"
             ]
         }
     }

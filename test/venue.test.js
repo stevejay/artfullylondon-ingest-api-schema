@@ -35,10 +35,18 @@ it("should be a valid schema", () => {
 const VALID_VENUES = {
   valid: buildVenue(),
   "with url": buildVenue({ url: "http://example.com/url" }),
-  "with description": buildVenue({ description: "The description" }),
+  "with description": buildVenue({
+    description: {
+      mimeType: "text/plain",
+      value: "The description"
+    }
+  }),
   "with description and credit": buildVenue({
-    description: "The description",
-    descriptionCredit: "The credit"
+    description: {
+      mimeType: "text/plain",
+      value: "The description",
+      credit: "The credit"
+    }
   }),
   "with email": buildVenue({ email: "foo@foo.com" }),
   "with telephone": buildVenue({ telephone: "07930427752" }),
@@ -63,8 +71,12 @@ const VALID_VENUES = {
       }
     ]
   }),
-  "with raw content": buildVenue({ rawContent: "Raw content" }),
-  "with old raw content": buildVenue({ oldRawContent: "Old raw content" })
+  "with current watched content": buildVenue({
+    currentWatchedContent: "Raw content"
+  }),
+  "with published watched content": buildVenue({
+    publishedWatchedContent: "Published watched content"
+  })
 };
 
 Object.keys(VALID_VENUES).forEach(key => {
@@ -90,8 +102,38 @@ const INVALID_VENUES = {
   "invalid url value": buildVenue({ url: "Invalid" }),
   "no title": buildVenue({ title: undefined }),
   "empty title value": buildVenue({ title: "" }),
-  "empty description": buildVenue({ description: "" }),
-  "empty description credit": buildVenue({ descriptionCredit: "" }),
+  "empty description": buildVenue({ description: {} }),
+  "missing description type": buildVenue({
+    description: {
+      mimeType: undefined,
+      value: "The description"
+    }
+  }),
+  "empty description type": buildVenue({
+    description: {
+      mimeType: "",
+      value: "The description"
+    }
+  }),
+  "missing description value": buildVenue({
+    description: {
+      mimeType: "text/plain",
+      value: undefined
+    }
+  }),
+  "empty description value": buildVenue({
+    description: {
+      mimeType: "text/plain",
+      value: ""
+    }
+  }),
+  "empty description credit": buildVenue({
+    description: {
+      mimeType: "text/plain",
+      value: "The description",
+      credit: ""
+    }
+  }),
   "no address": buildVenue({ address: undefined }),
   "empty address": buildVenue({ address: "" }),
   "no postcode": buildVenue({ postcode: undefined }),
@@ -134,8 +176,10 @@ const INVALID_VENUES = {
   "missing image ratio": buildVenue({
     images: [{ id: "11111111222222223333333344444444", ratio: undefined }]
   }),
-  "empty raw content": buildVenue({ rawContent: "" }),
-  "empty old raw content": buildVenue({ oldRawContent: "" }),
+  "empty current watched content": buildVenue({ currentWatchedContent: "" }),
+  "empty published watched content": buildVenue({
+    publishedWatchedContent: ""
+  }),
   "empty opening rules": buildVenue({
     openingRules: []
   }),

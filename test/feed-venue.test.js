@@ -15,7 +15,7 @@ const buildFeedVenue = (customizations = {}) => ({
   venueId: "venue-id",
   venueEntityId: "venue-entity-id",
   version: 999,
-  rawContent: "the raw content",
+  watchedContent: "the watched content",
   ...customizations
 });
 
@@ -46,8 +46,8 @@ const INVALID_FEED_VENUES = {
   "no venue entity ID": buildFeedVenue({ venueEntityId: undefined }),
   "empty venue entity ID": buildFeedVenue({ venueEntityId: "" }),
   "invalid venue entity ID": buildFeedVenue({ venueEntityId: "has/slash" }),
-  "no raw content": buildFeedVenue({ rawContent: undefined }),
-  "empty raw content": buildFeedVenue({ rawContent: "" })
+  "no watched content": buildFeedVenue({ watchedContent: undefined }),
+  "empty watched content": buildFeedVenue({ watchedContent: "" })
 };
 
 Object.keys(INVALID_FEED_VENUES).forEach(key => {

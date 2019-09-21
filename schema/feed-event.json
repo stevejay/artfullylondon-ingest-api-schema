@@ -4,8 +4,7 @@
     "type": "object",
     "properties": {
         "entity": {
-            "title": "Entity",
-            "description": "Event entity type",
+            "title": "Entity Type",
             "const": "event"
         },
         "venueId": {
@@ -60,7 +59,7 @@
             "title": "Summary",
             "allOf": [
                 {
-                    "$ref": "basic-types.json#/definitions/summary"
+                    "$ref": "basic-types.json#/definitions/prose"
                 }
             ]
         },
@@ -120,12 +119,11 @@
                 }
             ]
         },
-        "rawContent": {
-            "title": "Raw Content",
-            "description": "The information to monitor for changes",
+        "watchedContent": {
+            "title": "Watched Content",
             "allOf": [
                 {
-                    "$ref": "basic-types.json#/definitions/rawContent"
+                    "$ref": "basic-types.json#/definitions/watchedContent"
                 }
             ]
         }
@@ -153,7 +151,7 @@
                     "costDetails",
                     "bookingDetails",
                     "performanceDetails",
-                    "rawContent"
+                    "watchedContent"
                 ]
             }
         },
@@ -178,7 +176,7 @@
                     "costDetails",
                     "bookingDetails",
                     "exhibitionDetails",
-                    "rawContent"
+                    "watchedContent"
                 ]
             }
         }

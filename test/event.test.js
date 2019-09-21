@@ -52,7 +52,7 @@ const buildExhibitionEvent = (customizations = {}) => ({
     type: "Unknown"
   },
   exhibitionDetails: buildExhibitionDetails(),
-  rawContent: "the raw content",
+  currentWatchedContent: "the watched content",
   ...customizations
 });
 
@@ -75,7 +75,7 @@ const buildPerformanceEvent = (customizations = {}) => ({
     type: "Unknown"
   },
   performanceDetails: buildPerformanceDetails(),
-  rawContent: "the raw content",
+  currentWatchedContent: "the watched content",
   ...customizations
 });
 
@@ -88,7 +88,12 @@ const VALID_EXHIBITIONS = {
   "with encoded character in venue entity id": buildExhibitionEvent({
     venueEntityId: "exhibitions%2Fsome_event"
   }),
-  "with summary": buildExhibitionEvent({ summary: "The summary" }),
+  "with summary": buildExhibitionEvent({
+    summary: {
+      mimeType: "text/plain",
+      value: "The summary"
+    }
+  }),
   "unknown cost": buildExhibitionEvent({ costDetails: { type: "Unknown" } }),
   free: buildExhibitionEvent({ costDetails: { type: "Free" } }),
   "paid with unknown cost": buildExhibitionEvent({
@@ -111,6 +116,15 @@ const VALID_EXHIBITIONS = {
   }),
   "with images": buildExhibitionEvent({
     images: [{ id: "11111111222222223333333344444444", ratio: 1 }]
+  }),
+  "with dominantColor prop on images": buildExhibitionEvent({
+    images: [
+      {
+        id: "11111111222222223333333344444444",
+        ratio: 1,
+        dominantColor: "FF00FF"
+      }
+    ]
   }),
   "with tags": buildExhibitionEvent({
     tags: [{ id: "audience/families", label: "families" }]
@@ -274,14 +288,19 @@ const VALID_EXHIBITIONS = {
       ]
     })
   }),
-  "with old raw content": buildExhibitionEvent({
-    oldRawContent: "Old raw content"
+  "with published watched content": buildExhibitionEvent({
+    publishedWatchedContent: "Published watched content"
   })
 };
 
 const VALID_PERFORMANCES = {
   valid: buildPerformanceEvent(),
-  "with summary": buildPerformanceEvent({ summary: "The summary" }),
+  "with summary": buildPerformanceEvent({
+    summary: {
+      mimeType: "text/plain",
+      value: "The summary"
+    }
+  }),
   "unknown cost": buildPerformanceEvent({ costDetails: { type: "Unknown" } }),
   free: buildPerformanceEvent({ costDetails: { type: "Free" } }),
   "paid with unknown cost": buildPerformanceEvent({
@@ -349,15 +368,37 @@ const INVALID_EXHIBITIONS = {
   "no entity status": buildExhibitionEvent({ entityStatus: undefined }),
   "empty entity status": buildExhibitionEvent({ entityStatus: "" }),
   "invalid entity status": buildExhibitionEvent({ entityStatus: "Invalid" }),
-  "no raw content": buildExhibitionEvent({ rawContent: undefined }),
-  "empty raw content": buildExhibitionEvent({ rawContent: "" }),
+  "no current watched content": buildExhibitionEvent({
+    currentWatchedContent: undefined
+  }),
+  "empty current watched content": buildExhibitionEvent({
+    currentWatchedContent: ""
+  }),
   "invalid event type": buildExhibitionEvent({ eventType: "Invalid" }),
   "no url": buildExhibitionEvent({ url: undefined }),
   "empty url value": buildExhibitionEvent({ url: "" }),
   "wrong url value": buildExhibitionEvent({ url: "venue" }),
   "no title": buildExhibitionEvent({ title: undefined }),
   "empty title value": buildExhibitionEvent({ title: "" }),
-  "empty summary value": buildExhibitionEvent({ summary: "" }),
+  "empty summary": buildExhibitionEvent({ summary: {} }),
+  "empty summary type": buildExhibitionEvent({
+    summary: {
+      mimeType: "",
+      value: "The summary"
+    }
+  }),
+  "invalid summary type": buildExhibitionEvent({
+    summary: {
+      mimeType: "Invalid",
+      value: "The summary"
+    }
+  }),
+  "empty summary value": buildExhibitionEvent({
+    summary: {
+      mimeType: "text/plain",
+      value: ""
+    }
+  }),
   "no age details": buildExhibitionEvent({ ageDetails: undefined }),
   "partial age details": buildExhibitionEvent({ ageDetails: { minAge: 10 } }),
   "invalid age details": buildExhibitionEvent({
@@ -523,7 +564,9 @@ const INVALID_EXHIBITIONS = {
       ]
     })
   }),
-  "empty old raw content": buildExhibitionEvent({ oldRawContent: "" })
+  "empty published watched content": buildExhibitionEvent({
+    publishedWatchedContent: ""
+  })
 };
 
 const INVALID_PERFORMANCES = {
