@@ -108,11 +108,21 @@ const VALID_EXHIBITIONS = {
   "booking not required": buildExhibitionEvent({
     bookingDetails: { type: "NotRequired" }
   }),
-  "booking required with no opening date": buildExhibitionEvent({
+  "booking required": buildExhibitionEvent({
     bookingDetails: { type: "Required" }
   }),
-  "booking required": buildExhibitionEvent({
-    bookingDetails: { type: "Required", dateBookingOpens: "2018-01-18" }
+  "booking required and booking is not open": buildExhibitionEvent({
+    bookingDetails: { type: "Required", openForBooking: false }
+  }),
+  "booking required and booking is open": buildExhibitionEvent({
+    bookingDetails: { type: "Required", openForBooking: true }
+  }),
+  "booking required and booking opens on a date": buildExhibitionEvent({
+    bookingDetails: {
+      type: "Required",
+      openForBooking: false,
+      dateBookingOpens: "2018-01-18"
+    }
   }),
   "with images": buildExhibitionEvent({
     images: [{ id: "11111111222222223333333344444444", ratio: 1 }]
@@ -315,11 +325,21 @@ const VALID_PERFORMANCES = {
   "booking not required": buildPerformanceEvent({
     bookingDetails: { type: "NotRequired" }
   }),
-  "booking required with no opening date": buildPerformanceEvent({
+  "booking required": buildPerformanceEvent({
     bookingDetails: { type: "Required" }
   }),
-  "booking required": buildPerformanceEvent({
-    bookingDetails: { type: "Required", dateBookingOpens: "2018-01-18" }
+  "booking required and booking is not open": buildPerformanceEvent({
+    bookingDetails: { type: "Required", openForBooking: false }
+  }),
+  "booking required and booking is open": buildPerformanceEvent({
+    bookingDetails: { type: "Required", openForBooking: true }
+  }),
+  "booking required and booking opens on a date": buildPerformanceEvent({
+    bookingDetails: {
+      type: "Required",
+      openForBooking: false,
+      dateBookingOpens: "2018-01-18"
+    }
   }),
   "with images": buildPerformanceEvent({
     images: [{ id: "11111111222222223333333344444444", ratio: 1 }]
@@ -417,6 +437,9 @@ const INVALID_EXHIBITIONS = {
   }),
   "booking required with invalid date booking opens": buildExhibitionEvent({
     bookingDetails: { type: "Required", dateBookingOpens: "invalid" }
+  }),
+  "booking required with invalid open for booking value": buildExhibitionEvent({
+    bookingDetails: { type: "Required", openForBooking: "invalid" }
   }),
   "empty images": buildExhibitionEvent({ images: [] }),
   "invalid image id": buildExhibitionEvent({
