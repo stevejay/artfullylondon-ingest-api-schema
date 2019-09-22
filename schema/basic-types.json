@@ -96,6 +96,17 @@
                 "NotApplicable"
             ]
         },
+        "areaOfLondon": {
+            "type": "string",
+            "enum": [
+                "Central",
+                "West",
+                "North",
+                "East",
+                "SouthEast",
+                "SouthWest"
+            ]
+        },
         "url": {
             "type": "string",
             "format": "uri"

@@ -64,6 +64,14 @@
                 }
             ]
         },
+        "areaOfLondon": {
+            "title": "Area of London",
+            "allOf": [
+                {
+                    "$ref": "basic-types.json#/definitions/areaOfLondon"
+                }
+            ]
+        },
         "latitude": {
             "title": "Latitude",
             "type": "number",
@@ -162,11 +170,13 @@
         "title",
         "address",
         "postcode",
+        "areaOfLondon",
         "latitude",
         "longitude",
         "wheelchairAccess",
         "disabledBathroom",
         "hearingFacilities",
         "hasPermanentCollection"
-    ]
+    ],
+    "additionalProperties": false
 }
