@@ -67,12 +67,10 @@ jobs:
           name: Create package src
           command: |
             /go/bin/go-bindata -pkg "ingestschema" -prefix "schema/" -o ./go/bindata.go schema/...
-            cd ./go
-            ls
       - run:
           name: Build package
           command: |
-            /go/bin/gox -os="linux darwin windows" -arch="amd64" -output="./go-dist/artfullylondon-ingest-api-schema_{{.OS}}_{{.Arch}}" ./go/...
+            /go/bin/gox -os="linux darwin windows" -arch="amd64" -output="./go-dist/artfullylondon-ingest-api-schema_{{.OS}}_{{.Arch}}" ./go
             cd ./go-dist/
             ls
     #   - run:
