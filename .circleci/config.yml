@@ -70,7 +70,7 @@ jobs:
           name: Build package
           command: |
             /go/bin/gox -os="linux darwin windows" -arch="amd64" -output="go-dist/artfullylondon-ingest-api-schema_{{.OS}}_{{.Arch}}" ./go/...
-            cd go-dist/ && gzip *
+            cd go-dist/ && ls
     #   - run:
     #       name: Publish package
     #       command: /go/bin/ghr -t $GITHUB_API_KEY -u stevejay -r artfullylondon-ingest-api-schema-golang $(<VERSION) ./go-dist
