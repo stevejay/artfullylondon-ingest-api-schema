@@ -65,14 +65,13 @@ jobs:
             go get -u github.com/go-bindata/go-bindata/...
       - run:
           name: Create package src
-          command: |
-            /go/bin/go-bindata -pkg "ingestschema" -prefix "schema/" -o ./go/bindata.go schema/...
+          command: /go/bin/go-bindata -pkg "ingestschema" -prefix "schema/" -o ./go/bindata.go schema/...
       - run:
           name: Build package
-          command: |
-            /go/bin/gox -verbose -os="linux darwin windows" -arch="amd64" -output="./go-dist/artfullylondon-ingest-api-schema_{{.OS}}_{{.Arch}}" ./go
-            # cd ./go-dist/
-            # ls
+          command: /go/bin/gox -verbose -os="linux darwin windows" -arch="amd64" -output="./go-dist/artfullylondon-ingest-api-schema_{{.OS}}_{{.Arch}}" ./go/...
+
+    # cd ./go-dist/
+    # ls
     #   - run:
     #       name: Publish package
     #       command: /go/bin/ghr -t $GITHUB_API_KEY -u stevejay -r artfullylondon-ingest-api-schema-golang $(<VERSION) ./go-dist
