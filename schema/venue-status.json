@@ -7,7 +7,7 @@
             "title": "Venue ID",
             "allOf": [
                 {
-                    "$ref": "basic-types.json#/definitions/componentId"
+                    "$ref": "basic-types.json#/definitions/pathSegment"
                 }
             ]
         },
@@ -25,7 +25,7 @@
             "items": {
                 "allOf": [
                     {
-                        "$ref": "basic-types.json#/definitions/componentId"
+                        "$ref": "basic-types.json#/definitions/pathSegment"
                     }
                 ]
             }

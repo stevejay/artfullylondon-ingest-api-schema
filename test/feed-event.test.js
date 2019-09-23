@@ -113,16 +113,9 @@ const VALID_EXHIBITIONS = {
   "booking required": buildExhibitionEvent({
     bookingDetails: { type: "Required" }
   }),
-  "booking required and booking is not open": buildExhibitionEvent({
-    bookingDetails: { type: "Required", openForBooking: false }
-  }),
-  "booking required and booking is open": buildExhibitionEvent({
-    bookingDetails: { type: "Required", openForBooking: true }
-  }),
   "booking required and booking opens on a date": buildExhibitionEvent({
     bookingDetails: {
       type: "Required",
-      openForBooking: false,
       dateBookingOpens: "2018-01-18"
     }
   }),
@@ -130,7 +123,7 @@ const VALID_EXHIBITIONS = {
     imageUrls: ["https://test.com/image.png"]
   }),
   "with tags": buildExhibitionEvent({
-    tags: [{ id: "audience/families", label: "families" }]
+    tags: [{ type: "Audience", slug: "families", label: "families" }]
   }),
   "has day opening rule": buildExhibitionEvent({
     exhibitionDetails: buildExhibitionDetails({
@@ -318,16 +311,9 @@ const VALID_PERFORMANCES = {
   "booking required": buildPerformanceEvent({
     bookingDetails: { type: "Required" }
   }),
-  "booking required and booking is not open": buildPerformanceEvent({
-    bookingDetails: { type: "Required", openForBooking: false }
-  }),
-  "booking required and booking is open": buildPerformanceEvent({
-    bookingDetails: { type: "Required", openForBooking: true }
-  }),
   "booking required and booking opens on a date": buildPerformanceEvent({
     bookingDetails: {
       type: "Required",
-      openForBooking: false,
       dateBookingOpens: "2018-01-18"
     }
   }),
@@ -335,7 +321,7 @@ const VALID_PERFORMANCES = {
     imageUrls: ["https://test.com/image.png"]
   }),
   "with tags": buildPerformanceEvent({
-    tags: [{ id: "audience/families", label: "families" }]
+    tags: [{ type: "Audience", slug: "families", label: "families" }]
   }),
   "has performances": buildPerformanceEvent({
     performanceDetails: buildPerformanceDetails({
@@ -424,17 +410,33 @@ const INVALID_EXHIBITIONS = {
   "booking required with invalid date booking opens": buildExhibitionEvent({
     bookingDetails: { type: "Required", dateBookingOpens: "invalid" }
   }),
-  "booking required with invalid open for booking value": buildExhibitionEvent({
-    bookingDetails: { type: "Required", openForBooking: "invalid" }
-  }),
   "empty images": buildExhibitionEvent({ imageUrls: [] }),
   "invalid image url": buildExhibitionEvent({ imageUrls: [""] }),
   "empty tags": buildExhibitionEvent({ tags: [] }),
-  "invalid tag id": buildExhibitionEvent({
-    tags: [{ id: "invalid", label: "families" }]
+  "empty tags": buildExhibitionEvent({ tags: [] }),
+  "missing tag type": buildExhibitionEvent({
+    tags: [{ slug: "families", label: "families" }]
   }),
-  "invalid tag label": buildExhibitionEvent({
-    tags: [{ id: "audience/families", label: "" }]
+  "empty tag type": buildExhibitionEvent({
+    tags: [{ type: "", slug: "families", label: "families" }]
+  }),
+  "invalid tag type": buildExhibitionEvent({
+    tags: [{ type: "Invalid", slug: "families", label: "families" }]
+  }),
+  "missing tag slug": buildExhibitionEvent({
+    tags: [{ type: "Audience", label: "families" }]
+  }),
+  "empty tag slug": buildExhibitionEvent({
+    tags: [{ type: "Audience", slug: "", label: "families" }]
+  }),
+  "invalid tag slug": buildExhibitionEvent({
+    tags: [{ type: "Audience", slug: "in/valid", label: "families" }]
+  }),
+  "missing tag label": buildExhibitionEvent({
+    tags: [{ type: "Audience", slug: "families" }]
+  }),
+  "empty tag label": buildExhibitionEvent({
+    tags: [{ type: "Audience", slug: "families", label: "" }]
   }),
   "invalid tag": buildExhibitionEvent({
     tags: [{}]

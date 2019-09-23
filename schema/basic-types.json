@@ -2,8 +2,8 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://schemas.artfully.london/v1/basic-types.json",
     "definitions": {
-        "componentId": {
-            "description": "An ID that is safe to use as a URL component",
+        "pathSegment": {
+            "description": "A value that is safe to use as a URL path segment",
             "type": "string",
             "pattern": "^([a-z0-9._~:@!$&'()*+,;=-]|(%[0-9A-Fa-f][0-9A-Fa-f]))+$"
         },

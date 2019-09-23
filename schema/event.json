@@ -108,10 +108,6 @@
                     },
                     "then": {
                         "properties": {
-                            "openForBooking": {
-                                "title": "Open For Booking",
-                                "type": "boolean"
-                            },
                             "dateBookingOpens": {
                                 "title": "Date Booking Opens",
                                 "allOf": [
@@ -290,10 +286,23 @@
                 "title": "Tag",
                 "type": "object",
                 "properties": {
-                    "id": {
-                        "title": "Tag ID",
+                    "type": {
+                        "title": "Tag Type",
                         "type": "string",
-                        "pattern": "^(audience|medium|style|geo)/.+"
+                        "enum": [
+                            "Audience",
+                            "Medium",
+                            "Style",
+                            "Geo"
+                        ]
+                    },
+                    "slug": {
+                        "title": "Tag Slug",
+                        "allOf": [
+                            {
+                                "$ref": "basic-types.json#/definitions/pathSegment"
+                            }
+                        ]
                     },
                     "label": {
                         "title": "Tag Label",
@@ -303,7 +312,8 @@
                 },
                 "additionalProperties": false,
                 "required": [
-                    "id",
+                    "type",
+                    "slug",
                     "label"
                 ]
             },
@@ -315,7 +325,7 @@
             "title": "Venue ID",
             "allOf": [
                 {
-                    "$ref": "basic-types.json#/definitions/componentId"
+                    "$ref": "basic-types.json#/definitions/pathSegment"
                 }
             ]
         },
@@ -323,7 +333,7 @@
             "title": "Venue Entity ID",
             "allOf": [
                 {
-                    "$ref": "basic-types.json#/definitions/componentId"
+                    "$ref": "basic-types.json#/definitions/pathSegment"
                 }
             ]
         },
