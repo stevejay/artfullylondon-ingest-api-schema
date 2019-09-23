@@ -70,7 +70,7 @@ jobs:
       - run:
           name: Build package
           command: |
-            /go/bin/gox -os="linux darwin windows" -arch="amd64" -output="./go-dist/artfullylondon-ingest-api-schema_{{.OS}}_{{.Arch}}" ./go
+            /go/bin/gox -verbose -os="linux darwin windows" -arch="amd64" -output="./go-dist/artfullylondon-ingest-api-schema_{{.OS}}_{{.Arch}}" ./go
             cd ./go-dist/
             ls
     #   - run:
