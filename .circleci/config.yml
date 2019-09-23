@@ -44,12 +44,48 @@ jobs:
           name: Upload package to pipy
           command: cd ./python && python3 -m twine upload --skip-existing dist/*
 
+  build_go_package:
+    docker:
+      - image: circleci/golang:1.12.5
+    working_directory: ~/project
+    steps:
+      - checkout
+      - run:
+          name: Copy files
+          command: |
+            mkdir ./go
+            cp ./LICENSE ./go/LICENSE
+            cp ./VERSION ./go/VERSION
+      - run:
+          name: Install go dependencies
+          command: |
+            go get -u github.com/tcnksm/ghr
+            go get -u github.com/mitchellh/gox
+            go get -u github.com/go-bindata/go-bindata/...
+      - run:
+          name: Create package src
+          command: /go/bin/go-bindata -pkg "ingestschema" -prefix "schema/" -o ./go/bindata.go schema/...
+      - run:
+          name: Build package
+          command: |
+            /go/bin/gox -os="linux darwin windows" -arch="amd64" -output="go-dist/artfullylondon-ingest-api-schema_{{.OS}}_{{.Arch}}" ./go/...
+            cd go-dist/ && gzip *
+    #   - run:
+    #       name: Publish package
+    #       command: /go/bin/ghr -t $GITHUB_API_KEY -u stevejay -r artfullylondon-ingest-api-schema-golang $(<VERSION) ./go-dist
+
 workflows:
   version: 2
   build:
     jobs:
       - test
       - build_python_package:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
+      - build_go_package:
           requires:
             - test
           filters:
