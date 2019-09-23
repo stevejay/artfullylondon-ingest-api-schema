@@ -54,6 +54,7 @@ jobs:
           name: Copy files
           command: |
             mkdir ./go
+            mkdir ./go-dist
             cp ./LICENSE ./go/LICENSE
             cp ./VERSION ./go/VERSION
       - run:
