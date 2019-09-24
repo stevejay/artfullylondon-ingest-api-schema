@@ -100,7 +100,7 @@ func basicTypesJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "basic-types.json", size: 4931, mode: os.FileMode(420), modTime: time.Unix(1569313548, 0)}
+	info := bindataFileInfo{name: "basic-types.json", size: 4931, mode: os.FileMode(420), modTime: time.Unix(1569314442, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -120,7 +120,7 @@ func eventJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "event.json", size: 16549, mode: os.FileMode(420), modTime: time.Unix(1569313548, 0)}
+	info := bindataFileInfo{name: "event.json", size: 16549, mode: os.FileMode(420), modTime: time.Unix(1569314442, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -140,7 +140,7 @@ func feedEntityJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "feed-entity.json", size: 1557, mode: os.FileMode(420), modTime: time.Unix(1569313548, 0)}
+	info := bindataFileInfo{name: "feed-entity.json", size: 1557, mode: os.FileMode(420), modTime: time.Unix(1569314442, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -160,7 +160,7 @@ func feedEventJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "feed-event.json", size: 4898, mode: os.FileMode(420), modTime: time.Unix(1569313548, 0)}
+	info := bindataFileInfo{name: "feed-event.json", size: 4898, mode: os.FileMode(420), modTime: time.Unix(1569314442, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -180,7 +180,7 @@ func feedVenueJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "feed-venue.json", size: 1271, mode: os.FileMode(420), modTime: time.Unix(1569313548, 0)}
+	info := bindataFileInfo{name: "feed-venue.json", size: 1271, mode: os.FileMode(420), modTime: time.Unix(1569314442, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -200,7 +200,7 @@ func imageTypesJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "image-types.json", size: 1565, mode: os.FileMode(420), modTime: time.Unix(1569313548, 0)}
+	info := bindataFileInfo{name: "image-types.json", size: 1565, mode: os.FileMode(420), modTime: time.Unix(1569314442, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -220,7 +220,7 @@ func rulesTypesJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "rules-types.json", size: 8052, mode: os.FileMode(420), modTime: time.Unix(1569313548, 0)}
+	info := bindataFileInfo{name: "rules-types.json", size: 8052, mode: os.FileMode(420), modTime: time.Unix(1569314442, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -240,7 +240,7 @@ func venueStatusJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "venue-status.json", size: 998, mode: os.FileMode(420), modTime: time.Unix(1569313548, 0)}
+	info := bindataFileInfo{name: "venue-status.json", size: 998, mode: os.FileMode(420), modTime: time.Unix(1569314442, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -260,7 +260,7 @@ func venueJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "venue.json", size: 4835, mode: os.FileMode(420), modTime: time.Unix(1569313548, 0)}
+	info := bindataFileInfo{name: "venue.json", size: 4835, mode: os.FileMode(420), modTime: time.Unix(1569314442, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
