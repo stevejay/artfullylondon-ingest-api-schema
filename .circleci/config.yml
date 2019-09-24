@@ -66,7 +66,7 @@ jobs:
             git config --global user.name "CircleCI"
             git add go/bindata.go
             git commit -m "circleci regenerated golang package"
-            git tag -a $(<VERSION) -m "circleci tagged $(<VERSION)"
+            git tag -a "go/v$(<VERSION)" -m "circleci tagged go/v$(<VERSION)"
             git push --tags origin master
 
 workflows:
