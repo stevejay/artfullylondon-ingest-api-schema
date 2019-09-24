@@ -59,6 +59,8 @@ jobs:
       - run:
           name: Commit result
           command: |
+            git config --global user.email "support@artfully.london"
+            git config --global user.name "CircleCI"
             git add go/bindata.go
             git commit -m "circleci regenerated golang package"
             git tag -a $(<VERSION) -m "circleci tagged $(<VERSION)"
