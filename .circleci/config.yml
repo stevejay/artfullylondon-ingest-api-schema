@@ -49,6 +49,9 @@ jobs:
       - image: circleci/golang:1.12.5
     working_directory: ~/project
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "99:9b:2f:4f:20:60:19:1d:ad:54:ff:48:0c:43:b1:3f"
       - checkout
       - run:
           name: Install required golang binaries
