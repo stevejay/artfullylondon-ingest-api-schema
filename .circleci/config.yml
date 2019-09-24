@@ -65,7 +65,7 @@ jobs:
             git config --global user.email "support@artfully.london"
             git config --global user.name "CircleCI"
             git add go/bindata.go
-            git commit -m "circleci regenerated golang package"
+            git commit -m "[ci skip] circleci regenerated golang package"
             git tag -a "go/v$(<VERSION)" -m "circleci tagged go/v$(<VERSION)"
             git push --tags origin master
 
