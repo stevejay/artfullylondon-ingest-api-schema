@@ -50,26 +50,25 @@ jobs:
     working_directory: ~/project
     steps:
       - checkout
-      - run:
-          name: Copy files
-          command: |
-            mkdir ./go
-            mkdir ./go-dist
-            cp ./LICENSE ./go/LICENSE
-            cp ./VERSION ./go/VERSION
-      - run:
-          name: Install go dependencies
-          command: |
-            go get -u github.com/tcnksm/ghr
-            go get -u github.com/mitchellh/gox
-            go get -u github.com/go-bindata/go-bindata/...
-      - run:
-          name: Create package src
-          command: /go/bin/go-bindata -pkg "ingestschema" -prefix "schema/" -o ./go/bindata.go schema/...
-      - run:
-          name: Build package
-          command: /go/bin/gox -verbose -os="linux darwin windows" -arch="amd64" -output="./go-dist/artfullylondon-ingest-api-schema_{{.OS}}_{{.Arch}}" ./go/...
-
+    #   - run:
+    #       name: Copy files
+    #       command: |
+    #         mkdir ./go
+    #         mkdir ./go-dist
+    #         cp ./LICENSE ./go/LICENSE
+    #         cp ./VERSION ./go/VERSION
+    #   - run:
+    #       name: Install go dependencies
+    #       command: |
+    #         go get -u github.com/tcnksm/ghr
+    #         go get -u github.com/mitchellh/gox
+    #         go get -u github.com/go-bindata/go-bindata/...
+    #   - run:
+    #       name: Create package src
+    #       command: /go/bin/go-bindata -pkg "ingestschema" -prefix "schema/" -o ./go/bindata.go schema/...
+    #   - run:
+    #       name: Build package
+    #       command: /go/bin/gox -verbose -os="linux darwin windows" -arch="amd64" -output="./go-dist/artfullylondon-ingest-api-schema_{{.OS}}_{{.Arch}}" ./go/...
     # cd ./go-dist/
     # ls
     #   - run:

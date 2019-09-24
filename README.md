@@ -46,3 +46,6 @@ cd go-dist/ && gzip *
 cd go
 go mod init github.com/stevejay/artfullylondon-ingest-api-schema-golang
 go mod tidy
+
+git tag -a v1.0.1 -m "initial version 1.0.1"
+git push --tags
