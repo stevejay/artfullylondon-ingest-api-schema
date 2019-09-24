@@ -134,6 +134,5 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-# go build artifacts
-go-dist/
-go/
+# go packaging
+go/bindata.go

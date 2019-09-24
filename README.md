@@ -15,6 +15,7 @@ Shared schema for the Artfully London ingest system.
 
 - https://github.com/tcnksm/ghr
 - https://medium.com/@masroor.hasan/publishing-a-go-package-to-github-with-circleci-2-0-41c1bde1493b
+- https://github.com/golang/go/wiki/Modules
 
 ```
 go get -u github.com/tcnksm/ghr
@@ -40,3 +41,8 @@ cd go-dist/ && gzip *
 - maxCost >= minCost
 - timeTo >= timeFrom
 - dateTo >= dateFrom
+
+//
+cd go
+go mod init github.com/stevejay/artfullylondon-ingest-api-schema-golang
+go mod tidy
