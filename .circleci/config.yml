@@ -50,30 +50,19 @@ jobs:
     working_directory: ~/project
     steps:
       - checkout
-    #   - run:
-    #       name: Copy files
-    #       command: |
-    #         mkdir ./go
-    #         mkdir ./go-dist
-    #         cp ./LICENSE ./go/LICENSE
-    #         cp ./VERSION ./go/VERSION
-    #   - run:
-    #       name: Install go dependencies
-    #       command: |
-    #         go get -u github.com/tcnksm/ghr
-    #         go get -u github.com/mitchellh/gox
-    #         go get -u github.com/go-bindata/go-bindata/...
-    #   - run:
-    #       name: Create package src
-    #       command: /go/bin/go-bindata -pkg "ingestschema" -prefix "schema/" -o ./go/bindata.go schema/...
-    #   - run:
-    #       name: Build package
-    #       command: /go/bin/gox -verbose -os="linux darwin windows" -arch="amd64" -output="./go-dist/artfullylondon-ingest-api-schema_{{.OS}}_{{.Arch}}" ./go/...
-    # cd ./go-dist/
-    # ls
-    #   - run:
-    #       name: Publish package
-    #       command: /go/bin/ghr -t $GITHUB_API_KEY -u stevejay -r artfullylondon-ingest-api-schema-golang $(<VERSION) ./go-dist
+      - run:
+          name: Install required golang binaries
+          command: go get -u github.com/go-bindata/go-bindata/...
+      - run:
+          name: Update bindata.go
+          command: /go/bin/go-bindata -pkg "ingestschema" -prefix "schema/" -o ./go/bindata.go schema/...
+      - run:
+          name: Commit result
+          command: |
+            git add go/bindata.go
+            git commit -m "circleci regenerated golang package"
+            git tag -a $(<VERSION) -m "circleci tagged $(<VERSION)"
+            git push --tags origin master
 
 workflows:
   version: 2
