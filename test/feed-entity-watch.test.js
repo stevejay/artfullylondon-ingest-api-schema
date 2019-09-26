@@ -17,7 +17,6 @@ const buildFeedEntityWatch = (customizations = {}) => ({
   venueEntityId: "venue-entity-id",
   version: 999,
   url: "https://some-url.com/",
-  title: "The Title",
   watchedContent: "the watched content",
   ...customizations
 });
@@ -27,7 +26,8 @@ it("should be a valid schema", () => {
 });
 
 const VALID_FEED_ENTITY_WATCHES = {
-  valid: buildFeedEntityWatch()
+  valid: buildFeedEntityWatch(),
+  "with title": buildFeedEntityWatch({ title: "The title" })
 };
 
 Object.keys(VALID_FEED_ENTITY_WATCHES).forEach(key => {
@@ -56,7 +56,6 @@ const INVALID_FEED_ENTITY_WATCHES = {
   }),
   "no url": buildFeedEntityWatch({ url: undefined }),
   "empty url": buildFeedEntityWatch({ url: "" }),
-  "no title": buildFeedEntityWatch({ title: undefined }),
   "empty title": buildFeedEntityWatch({ title: "" }),
   "no watched content": buildFeedEntityWatch({ watchedContent: undefined }),
   "empty watched content": buildFeedEntityWatch({ watchedContent: "" })

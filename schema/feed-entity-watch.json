@@ -71,7 +71,6 @@
         "venueEntityId",
         "version",
         "url",
-        "title",
         "watchedContent"
     ],
     "additionalProperties": false
