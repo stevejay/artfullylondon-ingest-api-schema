@@ -21,9 +21,15 @@ JSON Schema files for the Artfully London ingest system. Includes packaging thos
 
 ## TODO
 
+- Get rid of area of london
+
 ### Constraints Not Captured
 
 - maxAge >= minAge
 - maxCost >= minCost
 - timeTo >= timeFrom
 - dateTo >= dateFrom
+
+### Overrides
+
+- exhibition event's dateFrom and dateTo values

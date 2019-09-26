@@ -58,6 +58,26 @@ const buildExhibitionEvent = (customizations = {}) => ({
   ...customizations
 });
 
+/*
+{
+  entity: "event",
+  venueId: "venue-id",
+  venueEntityId: "venue-entity-id",
+  version: 999,
+  entityStatus: 'Publishable',
+  watchedContent: {
+      current: 'ffff',
+      published: 'gggg'
+  },
+  feedProperties: {
+
+  },
+  manualProperties: {
+
+  }
+}
+*/
+
 const buildPerformanceEvent = (customizations = {}) => ({
   entity: "event",
   venueId: "venue-id",
