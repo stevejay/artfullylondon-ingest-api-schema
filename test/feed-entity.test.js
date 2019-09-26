@@ -9,6 +9,7 @@ const createValidateFunc = () => {
 };
 
 const buildFeedEntity = (customizations = {}) => ({
+  feedType: "Entity",
   entity: "venue",
   venueId: "venue-id",
   venueEntityId: "venue-entity-id",
@@ -22,6 +23,7 @@ it("should be a valid schema", () => {
 
 const VALID_FEED_ENTITIES = {
   "venue feed entity": buildFeedEntity(),
+  "venue feed entity watch": buildFeedEntity({ feedType: "EntityWatch" }),
   "event feed entity": buildFeedEntity({ entity: "event" }),
   "feed entity with no URL": buildFeedEntity({ url: undefined }),
   "feed entity with URL": buildFeedEntity({ url: "http://test.com" }),
@@ -41,6 +43,9 @@ Object.keys(VALID_FEED_ENTITIES).forEach(key => {
 });
 
 const INVALID_FEED_ENTITIES = {
+  "no feed type value": buildFeedEntity({ feedType: undefined }),
+  "empty feed type value": buildFeedEntity({ feedType: "" }),
+  "wrong feed type value": buildFeedEntity({ feedType: "invalid" }),
   "no entity value": buildFeedEntity({ entity: undefined }),
   "empty entity value": buildFeedEntity({ entity: "" }),
   "wrong entity value": buildFeedEntity({ entity: "invalid" }),

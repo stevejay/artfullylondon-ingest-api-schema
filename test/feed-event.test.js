@@ -36,6 +36,7 @@ const buildPerformance = (customizations = {}) => ({
 });
 
 const buildExhibitionEvent = (customizations = {}) => ({
+  feedType: "Entity",
   entity: "event",
   venueId: "venue-id",
   venueEntityId: "venue-entity-id",
@@ -54,31 +55,11 @@ const buildExhibitionEvent = (customizations = {}) => ({
     type: "Unknown"
   },
   exhibitionDetails: buildExhibitionDetails(),
-  watchedContent: "the watched content",
   ...customizations
 });
 
-/*
-{
-  entity: "event",
-  venueId: "venue-id",
-  venueEntityId: "venue-entity-id",
-  version: 999,
-  entityStatus: 'Publishable',
-  watchedContent: {
-      current: 'ffff',
-      published: 'gggg'
-  },
-  feedProperties: {
-
-  },
-  manualProperties: {
-
-  }
-}
-*/
-
 const buildPerformanceEvent = (customizations = {}) => ({
+  feedType: "Entity",
   entity: "event",
   venueId: "venue-id",
   venueEntityId: "venue-entity-id",
@@ -97,7 +78,6 @@ const buildPerformanceEvent = (customizations = {}) => ({
     type: "Unknown"
   },
   performanceDetails: buildPerformanceDetails(),
-  watchedContent: "the watched content",
   ...customizations
 });
 
@@ -384,8 +364,6 @@ const INVALID_EXHIBITIONS = {
   "invalid venue entity ID": buildExhibitionEvent({
     venueEntityId: "has/slash"
   }),
-  "no watched content": buildExhibitionEvent({ watchedContent: undefined }),
-  "empty watched content": buildExhibitionEvent({ watchedContent: "" }),
   "invalid event type": buildExhibitionEvent({ eventType: "Invalid" }),
   "no url": buildExhibitionEvent({ url: undefined }),
   "empty url value": buildExhibitionEvent({ url: "" }),

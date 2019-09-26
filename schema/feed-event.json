@@ -3,6 +3,10 @@
     "$id": "https://schemas.artfully.london/v1/feed-event.json",
     "type": "object",
     "properties": {
+        "feedType": {
+            "title": "Feed Type",
+            "const": "Entity"
+        },
         "entity": {
             "title": "Entity Type",
             "const": "event"
@@ -118,14 +122,6 @@
                     "$ref": "event.json#/definitions/tags"
                 }
             ]
-        },
-        "watchedContent": {
-            "title": "Watched Content",
-            "allOf": [
-                {
-                    "$ref": "basic-types.json#/definitions/watchedContent"
-                }
-            ]
         }
     },
     "additionalProperties": false,
@@ -140,6 +136,7 @@
             },
             "then": {
                 "required": [
+                    "feedType",
                     "entity",
                     "venueId",
                     "venueEntityId",
@@ -150,8 +147,7 @@
                     "ageDetails",
                     "costDetails",
                     "bookingDetails",
-                    "performanceDetails",
-                    "watchedContent"
+                    "performanceDetails"
                 ]
             }
         },
@@ -165,6 +161,7 @@
             },
             "then": {
                 "required": [
+                    "feedType",
                     "entity",
                     "venueId",
                     "venueEntityId",
@@ -175,8 +172,7 @@
                     "ageDetails",
                     "costDetails",
                     "bookingDetails",
-                    "exhibitionDetails",
-                    "watchedContent"
+                    "exhibitionDetails"
                 ]
             }
         }
